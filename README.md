@@ -43,32 +43,77 @@ docs/architecture/
 
 ## Install
 
-From npm (when published):
+### First install (new BMAD project)
+
 ```bash
-bmad install bmad-method-arc42
+# 1. Clone the module
+git clone https://github.com/rrralf/bmad-method-arc42.git
+
+# 2. Install BMAD with arc42 as custom content (point to src/)
+npx bmad-method install \
+  --custom-content /path/to/bmad-method-arc42/src \
+  --tools none \
+  --yes
 ```
 
-From GitHub directly:
+### Add to existing BMAD project
+
 ```bash
-npm install github:rralf/bmad-method-arc42
+# 1. Clone the module (if not already)
+git clone https://github.com/rrralf/bmad-method-arc42.git
+
+# 2. Update existing BMAD installation with arc42
+npx bmad-method install \
+  --custom-content /path/to/bmad-method-arc42/src \
+  --action update \
+  --tools none \
+  --yes
 ```
 
-Manual (copy into your project):
+### Update to latest version
+
 ```bash
-cp -r workflows/bmad-create-architecture-arc42 \
-  your-project/_bmad/bmm/workflows/3-solutioning/
+# 1. Pull latest changes
+cd /path/to/bmad-method-arc42 && git pull
+
+# 2. Re-run installer
+npx bmad-method install \
+  --custom-content /path/to/bmad-method-arc42/src \
+  --action update \
+  --tools none \
+  --yes
+```
+
+### Uninstall
+
+Remove the module directory from your project:
+```bash
+rm -rf _bmad/arc42 _bmad/_config/custom/arc42
+```
+
+The installer registers `arc42` as a module and copies skills to `_bmad/arc42/`.
+
+### Claude Code skill wrapper
+
+After BMAD install, create a skill wrapper so `/bmad-arc42-create-architecture` works as a slash command:
+
+```bash
+mkdir -p .claude/skills/bmad-arc42-create-architecture
+cat > .claude/skills/bmad-arc42-create-architecture/SKILL.md << 'EOF'
+---
+name: bmad-arc42-create-architecture
+description: 'Create arc42-lite architecture documentation as multi-file structure with ADRs and diagrams. Use when the user says "create arc42 architecture" or "create architecture arc42" or "lets do arc42"'
+---
+
+Follow the instructions in _bmad/arc42/skills/bmad-arc42-create-architecture/workflow.md.
+EOF
 ```
 
 ## Usage
 
-Via Winston (Architect agent):
+Directly as a skill:
 ```
-[A42] Create Architecture (arc42)
-```
-
-Or directly:
-```
-/bmad-create-architecture-arc42
+/bmad-arc42-create-architecture
 ```
 
 ## Configuration
