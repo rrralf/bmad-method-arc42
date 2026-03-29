@@ -60,12 +60,9 @@ Ask: "Does this block expose or consume anything else?"
 
 5. "Which blocks need deeper documentation? (complex, risky, novel — not all blocks need Level 2)"
 6. For selected blocks: "What are the key internal components?"
+7. For selected blocks: "What are the domain entities *within this block*? Their key fields and lifecycle?"
 
-### Domain Model
-
-7. "What are the core domain entities? How do they transform as they flow between blocks?"
-
-Propose entity table and flow diagram based on input documents.
+Domain model belongs inside each block's Level 2, not as a cross-cutting section. Each block has its own entities — that's the point of bounded contexts.
 
 ## DIAGRAM:
 

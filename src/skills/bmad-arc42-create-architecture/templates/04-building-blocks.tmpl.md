@@ -55,20 +55,12 @@
 
 <!-- Repeat for each block that needs deeper documentation (complex, risky, novel) -->
 
+### Components
+
 | Component | Responsibility | In | Out |
 |-----------|---------------|-----|-----|
 
----
+### Domain Model (within this block)
 
-## Domain Model
-
-### Core Entities
-
-| Entity | Type | Context | Key Fields | Lifecycle |
-|--------|------|---------|------------|-----------|
-
-### Entity Flow Between Blocks
-
-```
-<!-- How entities transform as they flow through the system -->
-```
+| Entity | Type | Key Fields | Lifecycle |
+|--------|------|------------|-----------|
