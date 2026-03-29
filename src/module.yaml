@@ -1,0 +1,22 @@
+code: arc42
+name: "arc42 Architecture"
+header: "arc42-lite Architecture Documentation"
+subheader: "Multi-file architecture docs with ADRs, diagrams, and arc42 section mapping"
+description: "Guided workflow that generates arc42-lite architecture documentation as a proper file structure — one concern per file, with Architecture Decision Records and C4 diagrams"
+default_selected: false
+
+# Variables from Core Config inserted automatically by installer:
+## user_name
+## communication_language
+## document_output_language
+## output_folder
+## project_root
+
+architecture_output:
+  prompt: "Where should architecture documentation be stored?"
+  default: "docs/architecture"
+  result: "{project-root}/{value}"
+
+# Directories to create during installation
+directories:
+  - "{architecture_output}"

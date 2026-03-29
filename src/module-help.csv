@@ -1,0 +1,2 @@
+module,phase,name,code,sequence,workflow-file,command,required,agent,options,description,output-location,outputs,
+arc42,solutioning,Create Architecture (arc42),A42,,skill:bmad-arc42-create-architecture,bmad-arc42-create-architecture,false,architect,Create Mode,"Create arc42-lite multi-file architecture documentation with ADRs and diagrams. Generates one file per concern with proper arc42 section mapping.",architecture_output,"architecture docs",

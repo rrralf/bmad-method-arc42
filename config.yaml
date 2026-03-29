@@ -1,4 +1,0 @@
-# arc42 Module Configuration
-# Override in project-level _bmad/arc42/config.yaml
-
-architecture_output: docs/architecture
