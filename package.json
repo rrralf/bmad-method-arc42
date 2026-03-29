@@ -1,0 +1,12 @@
+{
+  "name": "bmad-method-arc42",
+  "version": "0.1.0",
+  "description": "arc42-lite architecture documentation workflow for BMAD. Generates multi-file architecture docs with ADRs, diagrams, and arc42 section mapping.",
+  "keywords": ["bmad", "arc42", "architecture", "documentation", "adr"],
+  "author": "rralf",
+  "license": "MIT",
+  "bmad": {
+    "moduleCode": "arc42",
+    "type": "method"
+  }
+}

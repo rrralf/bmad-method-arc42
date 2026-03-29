@@ -1,0 +1,7 @@
+# Adds arc42 architecture workflow to Winston (Architect) agent menu
+# Place in _bmad/_config/agents/bmm-architect.customize.yaml after install
+
+menu_additions:
+  - cmd: "A42 or fuzzy match on arc42"
+    exec: "skill:bmad-create-architecture-arc42"
+    label: "[A42] Create Architecture (arc42): Multi-file arc42-lite documentation with ADRs and diagrams"
