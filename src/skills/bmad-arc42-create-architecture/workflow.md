@@ -29,7 +29,7 @@ The workflow generates an arc42-lite documentation structure:
 │   ├── 01-executive-brief.md    ← §1,3,4: context, goals, strategy (step 2)
 │   ├── 02-constraints-nfr.md    ← §2: NFRs, constraints (step 3)
 │   ├── 03-api-contract.yml      ← §6: OpenAPI (step 5, if has_api)
-│   ├── 04-logical-view.md       ← §5: building blocks (step 4)
+│   ├── 04-building-blocks.md    ← §5: building blocks, contracts, domain model (step 4)
 │   ├── 04-pipeline.md           ← §6: data/processing pipeline (step 5, if has_pipeline)
 │   ├── 05-services/             ← §6: per-service docs (step 5, if has_services)
 │   │   └── {service-name}.md
@@ -98,7 +98,7 @@ Read fully and follow: `./steps/step-01-init.md` to begin the workflow.
 | 01 | README.md scaffold, directory structure | — | always |
 | 02 | 01-executive-brief.md | §1, §3, §4 | always |
 | 03 | 02-constraints-nfr.md | §2 | always |
-| 04 | 04-logical-view.md | §5 | always |
+| 04 | 04-building-blocks.md | §5 | always |
 | 05 | 04-pipeline.md, 03-api-contract.yml, 05-services/*.md | §6 | per feature flag |
 | 06 | 06-deployment.md | §7 | has_deployment |
 | 07 | 07-security.md | §8 | always |
