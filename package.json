@@ -5,6 +5,15 @@
   "keywords": ["bmad", "arc42", "architecture", "documentation", "adr"],
   "author": "rralf",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rralf/bmad-method-arc42"
+  },
+  "files": [
+    "config.yaml",
+    "workflows/",
+    "customizations/"
+  ],
   "bmad": {
     "moduleCode": "arc42",
     "type": "method"

@@ -43,8 +43,20 @@ docs/architecture/
 
 ## Install
 
+From npm (when published):
 ```bash
 bmad install bmad-method-arc42
+```
+
+From GitHub directly:
+```bash
+npm install github:rralf/bmad-method-arc42
+```
+
+Manual (copy into your project):
+```bash
+cp -r workflows/bmad-create-architecture-arc42 \
+  your-project/_bmad/bmm/workflows/3-solutioning/
 ```
 
 ## Usage
