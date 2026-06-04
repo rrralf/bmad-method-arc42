@@ -43,46 +43,52 @@ docs/architecture/
 
 ## Install
 
-### First install (new BMAD project)
+> **Requires BMAD installer v6.8+.** Use the `--custom-source` flag (a comma-separated
+> list of Git URLs or local paths). The installer finds the module definition in `src/`
+> automatically — no need to point at the subfolder. A **fresh** non-interactive
+> (`--yes`) install also requires `--tools` with a real IDE id (e.g. `claude-code`);
+> run `npx bmad-method install --list-tools` to see valid ids. Use `--directory` to
+> target a project other than the current folder.
+
+### Install directly from Git (recommended — no clone needed)
+
+Fresh BMAD project:
 
 ```bash
-# 1. Clone the module
+npx bmad-method install \
+  --directory /path/to/your/project \
+  --custom-source https://github.com/rrralf/bmad-method-arc42.git \
+  --tools claude-code \
+  --yes
+```
+
+Add to / update an existing BMAD project:
+
+```bash
+npx bmad-method install \
+  --directory /path/to/your/project \
+  --custom-source https://github.com/rrralf/bmad-method-arc42.git \
+  --action update \
+  --yes
+```
+
+The installer re-clones the Git source on update, so re-running the command above
+pulls the latest version.
+
+### Install from a local clone (module development)
+
+```bash
 git clone https://github.com/rrralf/bmad-method-arc42.git
 
-# 2. Install BMAD with arc42 as custom content (point to src/)
 npx bmad-method install \
-  --custom-content /path/to/bmad-method-arc42/src \
-  --tools none \
-  --yes
-```
-
-### Add to existing BMAD project
-
-```bash
-# 1. Clone the module (if not already)
-git clone https://github.com/rrralf/bmad-method-arc42.git
-
-# 2. Update existing BMAD installation with arc42
-npx bmad-method install \
-  --custom-content /path/to/bmad-method-arc42/src \
+  --directory /path/to/your/project \
+  --custom-source /path/to/bmad-method-arc42 \
   --action update \
-  --tools none \
   --yes
 ```
 
-### Update to latest version
-
-```bash
-# 1. Pull latest changes
-cd /path/to/bmad-method-arc42 && git pull
-
-# 2. Re-run installer
-npx bmad-method install \
-  --custom-content /path/to/bmad-method-arc42/src \
-  --action update \
-  --tools none \
-  --yes
-```
+> Point `--custom-source` at the **repo root** (not `src/`) — the installer resolves
+> `src/module.yaml` via its `skills/` + `src/` fallback.
 
 ### Uninstall
 
