@@ -87,37 +87,22 @@ npx bmad-method install \
   --yes
 ```
 
-> Point `--custom-source` at the **repo root** (not `src/`) — the installer resolves
-> `src/module.yaml` via its `skills/` + `src/` fallback.
+> Point `--custom-source` at the **repo root** (not `src/`). The installer reads
+> `.claude-plugin/marketplace.json`, then resolves the module from
+> `src/arc42-skills/` (where `module.yaml` + `module-help.csv` live next to the skill).
+
+The installer registers `arc42` as a module, copies it to `_bmad/arc42/`, and
+**configures the Claude Code skill automatically** (no manual wrapper needed) —
+`/bmad-arc42-create-architecture` is available right after install.
 
 ### Uninstall
 
-Remove the module directory from your project:
 ```bash
-rm -rf _bmad/arc42 _bmad/_config/custom/arc42
-```
-
-The installer registers `arc42` as a module and copies skills to `_bmad/arc42/`.
-
-### Claude Code skill wrapper
-
-After BMAD install, create a skill wrapper so `/bmad-arc42-create-architecture` works as a slash command:
-
-```bash
-mkdir -p .claude/skills/bmad-arc42-create-architecture
-cat > .claude/skills/bmad-arc42-create-architecture/SKILL.md << 'EOF'
----
-name: bmad-arc42-create-architecture
-description: 'Create arc42-lite architecture documentation as multi-file structure with ADRs and diagrams. Use when the user says "create arc42 architecture" or "create architecture arc42" or "lets do arc42"'
----
-
-Follow the instructions in _bmad/arc42/skills/bmad-arc42-create-architecture/workflow.md.
-EOF
+rm -rf _bmad/arc42 .claude/skills/bmad-arc42-create-architecture
 ```
 
 ## Usage
 
-Directly as a skill:
 ```
 /bmad-arc42-create-architecture
 ```
