@@ -1,0 +1,13 @@
+{
+  "name": "bmad-method-arc42",
+  "owner": "rralf",
+  "plugins": [
+    {
+      "name": "arc42",
+      "version": "0.1.0",
+      "description": "arc42-lite architecture documentation workflow — multi-file docs with ADRs, diagrams, and arc42 section mapping",
+      "author": "rralf",
+      "skills": ["src/arc42-skills/bmad-arc42-create-architecture"]
+    }
+  ]
+}

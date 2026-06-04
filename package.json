@@ -11,7 +11,8 @@
     "url": "https://github.com/rrralf/bmad-method-arc42"
   },
   "files": [
-    "src/"
+    "src/",
+    ".claude-plugin/"
   ],
   "bmad": {
     "moduleCode": "arc42",
