@@ -16,8 +16,8 @@ docs/architecture/
 ├── 1-architecture/
 │   ├── 01-executive-brief.md    ← §1,3,4: context, goals, strategy
 │   ├── 02-constraints-nfr.md    ← §2: NFRs, constraints
-│   ├── 03-api-contract.yml      ← §6: API contract (if applicable)
-│   ├── 04-logical-view.md       ← §5: building blocks
+│   ├── 03-api-contract.yml      ← §6: OpenAPI contract (mandatory if the system has an API)
+│   ├── 04-building-blocks.md    ← §5: building blocks, contracts, domain model
 │   ├── 04-pipeline.md           ← §6: pipeline (if applicable)
 │   ├── 05-services/             ← §6: per-service docs (if applicable)
 │   ├── 06-deployment.md         ← §7: deployment view (if applicable)
@@ -36,6 +36,9 @@ docs/architecture/
 ## Features
 
 - **11-step guided workflow** — each step produces 1-2 files through collaborative discovery
+- **API-first** — if the system exposes an API, a machine-readable OpenAPI contract is a
+  mandatory artifact of the package, written before the implementation. The final step
+  refuses to report the docs as complete while it's missing
 - **Feature detection** — skips sections not relevant to your project (no API? no api-contract.yml)
 - **ADR generation** — collects decisions from all steps, generates formal ADRs
 - **Resume support** — workflow state saved in README.md frontmatter, pick up where you left off
@@ -43,12 +46,19 @@ docs/architecture/
 
 ## Install
 
-> **Requires BMAD installer v6.8+.** Use the `--custom-source` flag (a comma-separated
-> list of Git URLs or local paths). The installer finds the module definition in `src/`
-> automatically — no need to point at the subfolder. A **fresh** non-interactive
-> (`--yes`) install also requires `--tools` with a real IDE id (e.g. `claude-code`);
-> run `npx bmad-method install --list-tools` to see valid ids. Use `--directory` to
-> target a project other than the current folder.
+> **Requires BMAD installer v6.10+** — the only version this module is tested against.
+> Earlier versions may work but are unverified. Use the `--custom-source` flag (a
+> comma-separated list of Git URLs or local paths); the installer reads
+> `.claude-plugin/marketplace.json` and resolves the module from the `skills` paths listed
+> there, which are relative to the repository root. A **fresh** non-interactive (`--yes`)
+> install also requires `--tools` with a real IDE id (e.g. `claude-code`); run
+> `npx bmad-method install --list-tools` to see valid ids. Use `--directory` to target a
+> project other than the current folder, and `@<branch-or-tag>` after a Git URL to install
+> from something other than the default branch.
+>
+> The module installs standalone — `bmm` is not required. It declares its own
+> `planning_artifacts` so document discovery works either way, and defers to bmm's value
+> when bmm is present.
 
 ### Install directly from Git (recommended — no clone needed)
 
@@ -109,13 +119,14 @@ rm -rf _bmad/arc42 .claude/skills/bmad-arc42-create-architecture
 
 ## Configuration
 
-Default config in `config.yaml`:
+The installer asks where architecture docs should live and writes the answer to
+`_bmad/arc42/config.yaml` (the prompt and its default come from `src/arc42-skills/module.yaml`):
 
 ```yaml
 architecture_output: docs/architecture
 ```
 
-Override per project in `_bmad/arc42/config.yaml`.
+Edit that file to change the location for an existing project.
 
 ## License
 

@@ -10,8 +10,14 @@ Resume an existing arc42 architecture workflow from where it left off.
 
 Read `{architecture_output}/README.md` frontmatter:
 - `stepsCompleted` — which steps are done
+- `interaction_mode` — `discovery` or `review` (see INTERACTION MODES in `../workflow.md`)
+- `execution_topology` — which variant of the quality sections applies
+- `decision_source` — whether decisions are owned elsewhere
 - `features` — which features were detected
 - `inputDocuments` — which documents were loaded
+
+Carry all of these forward. Re-deriving them mid-workflow produces a document whose halves
+were written under different assumptions.
 
 ### 2. Determine Next Step
 

@@ -1,0 +1,138 @@
+# arc42 §6 Runtime View — Published API contract
+#
+# OpenAPI skeleton. Fill from the step-05 discovery, keep it thin:
+# the contract documents the *shape* of the interface, not every field of every model.
+# Delete sections that do not apply (e.g. webhooks for a pure request/response API).
+
+openapi: 3.1.0
+
+info:
+  title: '{{project_name}} API'
+  version: '{{api_version}}'
+  description: |
+    {{api_description}}
+  contact:
+    name: '{{user_name}}'
+
+servers:
+  # One entry per environment that consumers can actually reach.
+  - url: '{{server_url}}'
+    description: '{{server_environment}}'
+
+tags:
+  # Group endpoints by the building block that owns them (see 04-building-blocks.md).
+  - name: '{{tag_name}}'
+    description: '{{tag_description}}'
+
+security:
+  # Default applied to every operation; override per-operation with `security: []` for public ones.
+  - '{{security_scheme_name}}': []
+
+paths:
+  '{{path}}':
+    '{{method}}':
+      tags: ['{{tag_name}}']
+      operationId: '{{operation_id}}'
+      summary: '{{summary}}'
+      description: |
+        {{operation_description}}
+      parameters:
+        - name: '{{param_name}}'
+          in: query # path | query | header | cookie
+          required: false
+          description: '{{param_description}}'
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/{{RequestSchema}}'
+      responses:
+        '200':
+          description: '{{success_description}}'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/{{ResponseSchema}}'
+        '400':
+          description: Invalid request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Unauthorized
+        '404':
+          description: Not found
+        '500':
+          description: Internal error
+
+# Async / event-driven interfaces belong in AsyncAPI, not here.
+# If the system publishes events, describe them in 04-pipeline.md or the owning
+# block's "Exposes" table in 04-building-blocks.md and link them from there.
+
+webhooks:
+  # Callbacks the system sends to consumers. Remove if none.
+  '{{webhook_name}}':
+    post:
+      operationId: '{{webhook_operation_id}}'
+      summary: '{{webhook_summary}}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/{{WebhookPayload}}'
+      responses:
+        '200':
+          description: Delivery acknowledged
+
+components:
+  securitySchemes:
+    # Must match the authentication decided in step-07 (07-security.md).
+    '{{security_scheme_name}}':
+      type: http # http | apiKey | oauth2 | openIdConnect | mutualTLS
+      scheme: bearer
+      bearerFormat: JWT
+      description: '{{auth_description}}'
+
+  schemas:
+    '{{RequestSchema}}':
+      type: object
+      required: ['{{required_field}}']
+      properties:
+        '{{field_name}}':
+          type: string
+          description: '{{field_description}}'
+
+    '{{ResponseSchema}}':
+      type: object
+      properties:
+        '{{field_name}}':
+          type: string
+          description: '{{field_description}}'
+
+    Problem:
+      # RFC 9457 problem details — the uniform error shape for this API.
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: Identifier for the error kind
+        title:
+          type: string
+          description: Short, human-readable summary
+        status:
+          type: integer
+          description: HTTP status code
+        detail:
+          type: string
+          description: Explanation specific to this occurrence
+        instance:
+          type: string
+          format: uri
+          description: Identifier for this specific occurrence

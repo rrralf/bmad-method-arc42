@@ -3,8 +3,11 @@
 ## MANDATORY EXECUTION RULES:
 
 - 📖 Read complete step file before acting
-- 🛑 Do NOT generate content without user input
-- ✅ Collaborate — ask questions, propose, refine together
+- 🛑 NEVER invent content. Check `interaction_mode` (see INTERACTION MODES in `../workflow.md`):
+  in `discovery` ask the questions below; in `review` extract from the input documents,
+  mark provenance, and ask only about what genuinely is not there
+- ✅ Collaborate as a peer — propose, correct, refine together; an interviewer reads a
+  script, a peer brings a draft
 - ✅ Communicate in {communication_language}, write output in {document_output_language}
 
 ## OUTPUT:
@@ -23,9 +26,25 @@ Collaboratively define constraints and NFRs covering arc42 §2.
 3. "Team constraints? Solo dev, small team, specific skill sets?"
 
 ### Non-Functional Requirements
+
 4. "Performance — any latency/throughput targets?"
+
+**Questions 5 and 6 depend on `execution_topology`. Ask one variant, not both.**
+
+If `server` / `hybrid`:
 5. "Scalability — what's the expected load now vs. 12 months?"
 6. "Availability — how bad is downtime? (hobby project vs. business critical)"
+
+If `local-process` / `browser`:
+5. "Nothing scales with users here — there's no shared instance. What grows instead?
+   Usually it's the input: how large does it get, and where does the system stop coping?"
+6. "Uptime doesn't apply without a service. The exposure is losing state the user thinks
+   is saved — where does state live, and how can it disappear?"
+   For `browser`, raise this explicitly even if the user doesn't: **the engine may evict
+   storage under pressure.** That is documented platform behaviour, not an edge case, and
+   it's the closest analogue to an availability risk this system has. Ask what the user
+   loses when it happens and whether anything mitigates it (persistence request, export).
+
 7. "Security — what data do we handle? Any compliance requirements?"
 
 ### Sizing

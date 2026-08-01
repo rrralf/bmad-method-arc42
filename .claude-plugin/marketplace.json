@@ -1,13 +1,22 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "bmad-method-arc42",
-  "owner": "rralf",
+  "description": "arc42-lite architecture documentation workflow for BMAD Method",
+  "owner": { "name": "rralf", "url": "https://github.com/rrralf" },
   "plugins": [
     {
       "name": "arc42",
-      "version": "0.1.0",
+      "version": "0.2.0",
+      "source": "./src/arc42-skills",
+      "strict": false,
+      "skills": ["./src/arc42-skills/bmad-arc42-create-architecture"],
       "description": "arc42-lite architecture documentation workflow — multi-file docs with ADRs, diagrams, and arc42 section mapping",
-      "author": "rralf",
-      "skills": ["src/arc42-skills/bmad-arc42-create-architecture"]
+      "author": { "name": "rralf" },
+      "homepage": "https://github.com/rrralf/bmad-method-arc42",
+      "repository": "https://github.com/rrralf/bmad-method-arc42",
+      "license": "MIT",
+      "category": "documentation",
+      "keywords": ["arc42", "architecture", "documentation", "adr", "c4", "bmad"]
     }
   ]
 }
