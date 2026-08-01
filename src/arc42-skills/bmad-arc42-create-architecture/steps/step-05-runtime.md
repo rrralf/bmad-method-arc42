@@ -23,7 +23,11 @@ Document runtime behavior — how the system actually works at runtime. Arc42 §
 ### If has_pipeline:
 
 1. "Walk me through the pipeline — what triggers it, what stages, what's the output?"
-2. "What happens when a stage fails? Retry? Skip? Alert?"
+2. "What happens when a stage fails?"
+   - `server` / `hybrid`: "Retry? Skip? Alert?"
+   - `local-process` / `browser`: "With no network in the path, what's actually transient?
+     If nothing, the question is what the user gets *instead* — partial result, skipped
+     row, refusal with an explanation?"
 3. "What's the data shape at each stage boundary?"
 
 Generate `04-pipeline.md` using template `./templates/04-pipeline.tmpl.md`, plus pipeline diagram.

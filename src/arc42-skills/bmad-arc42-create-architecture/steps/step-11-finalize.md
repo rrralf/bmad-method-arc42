@@ -41,9 +41,11 @@ Rebuild the Quick Navigation section with actual generated documents:
   from each ADR file: ⏳ + the pending check for an `Accepted` ADR whose Confirmation is
   not discharged, ↻ + the conditions for a `Rejected` one, ✅ otherwise
 - Update "Diagrams" table with all generated diagrams
-- Fill "Deliberately Not Documented" — one row per section skipped by a feature flag,
-  with *why it does not apply* and *what would bring it back*. Never leave this section
-  empty when flags were false: an unexplained gap is indistinguishable from an oversight
+- Fill "Deliberately Not Documented" — one row per section skipped by a feature flag **and**
+  per section dropped by `execution_topology` (uptime targets, retry strategy, alerting
+  thresholds and secret rotation all disappear for a local system), with *why it does not
+  apply* and *what would bring it back*. Never leave this section empty when flags were
+  false: an unexplained gap is indistinguishable from an oversight
 - Remove placeholder rows for files that weren't generated
 - Update frontmatter: `stepsCompleted: [1,2,3,4,5,6,7,8,9,10,11]`
 

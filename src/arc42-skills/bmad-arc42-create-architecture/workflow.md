@@ -89,6 +89,7 @@ exception — there the document *is* the source of truth.
 During step 1 (init), detect or ask which features apply:
 
 ```yaml
+execution_topology: server | hybrid | local-process | browser
 features:
   has_api: true/false         # generates 03-api-contract.yml — MANDATORY when true (API-first)
   has_pipeline: true/false    # generates 04-pipeline.md
@@ -97,6 +98,32 @@ features:
 ```
 
 Steps for disabled features are skipped automatically.
+
+### Execution Topology
+
+Several arc42 sections silently assume the system runs on infrastructure we operate.
+For a system that doesn't, those sections don't merely shrink — they ask the *wrong
+question*, and filling them with dashes looks like sloppiness rather than a considered
+absence. `execution_topology` picks which variant of each section is asked for:
+
+| Value | Meaning |
+|-------|---------|
+| `server` | We operate the infrastructure it runs on |
+| `hybrid` | Local client plus a backend we operate |
+| `local-process` | Runs on the user's machine — CLI, desktop app, script |
+| `browser` | Runs in the user's browser, no backend of ours |
+
+| Section | `server` / `hybrid` | `local-process` / `browser` |
+|---------|--------------------|-----------------------------|
+| Scalability | Load: current vs target throughput | **Scale of input**: largest input, where it degrades |
+| Availability | Uptime target, SLO, recovery | **Durability of local state** — for `browser`, the real risk is the engine evicting storage, not downtime |
+| Retry strategy | Retry, backoff, circuit breaker for transient failures | **What happens instead** — with no network, failures are properties of the input, not transient |
+| Observability | Logs, metrics, thresholds, alerts, tracing | What is observable locally, and where telemetry goes — often nowhere, by decision |
+| Auth / authz | Mechanism, model, session handling | May be **absent by decision** — record it as such, with the ADR |
+| Config & secrets | Sources, rotation, secret store | Config only; "no secrets" is a consequence of the architecture, not a gap |
+
+The wrong-variant sections are not silently dropped — they land in the README's
+**Deliberately Not Documented** table with the reason and what would bring them back.
 
 ---
 

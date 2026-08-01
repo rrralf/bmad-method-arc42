@@ -1,5 +1,6 @@
 ---
 stepsCompleted: []
+execution_topology: '' # server | hybrid | local-process | browser
 features:
   has_api: false
   has_pipeline: false

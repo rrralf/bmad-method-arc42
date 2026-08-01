@@ -52,6 +52,15 @@ Look for:
 
 Ask the user or infer from documents:
 
+**First — where does the system actually execute?** This decides which *variant* of the
+quality sections gets asked for later (scalability, availability, observability, auth,
+config). Getting it wrong means asking about uptime for a system with no server.
+
+- `server` — we operate the infrastructure it runs on
+- `hybrid` — local client plus a backend we operate
+- `local-process` — runs on the user's machine (CLI, desktop app, script)
+- `browser` — runs in the user's browser, no backend of ours
+
 "Based on what I've read, I'm detecting these architectural features:
 
 - **API?** Does the system expose an API to external consumers? → `has_api`
@@ -64,6 +73,7 @@ Ask the user or infer from documents:
 Please confirm or correct:"
 
 ```yaml
+execution_topology: {{detected}}
 features:
   has_api: {{detected}}
   has_pipeline: {{detected}}
@@ -100,6 +110,9 @@ Create the workspace:
 - UX Design: {status}
 - Research: {status}
 - Existing arch docs: {status}
+
+**Execution topology:** {execution_topology}
+_(quality sections will be asked in their {server-side / local} variant)_
 
 **Features Detected:**
 - API: {has_api}
