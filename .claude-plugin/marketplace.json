@@ -9,7 +9,7 @@
       "version": "0.2.0",
       "source": "./src/arc42-skills",
       "strict": false,
-      "skills": ["./bmad-arc42-create-architecture"],
+      "skills": ["./src/arc42-skills/bmad-arc42-create-architecture"],
       "description": "arc42-lite architecture documentation workflow — multi-file docs with ADRs, diagrams, and arc42 section mapping",
       "author": { "name": "rralf" },
       "homepage": "https://github.com/rrralf/bmad-method-arc42",
