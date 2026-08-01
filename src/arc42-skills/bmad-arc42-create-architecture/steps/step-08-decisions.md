@@ -3,7 +3,9 @@
 ## MANDATORY EXECUTION RULES:
 
 - 📖 Read complete step file before acting
-- 🛑 Do NOT generate content without user input
+- 🛑 NEVER invent content. Check `interaction_mode` (see INTERACTION MODES in `../workflow.md`):
+  in `discovery` ask the questions below; in `review` extract from the input documents,
+  mark provenance, and ask only about what genuinely is not there
 - ✅ Communicate in {communication_language}, write output in {document_output_language}
 
 ## OUTPUT:
@@ -39,6 +41,36 @@ Decisions **not** to do something count. "We considered X and chose not to" is a
 architectural decision and deserves an ADR — otherwise it gets re-proposed every
 quarter and re-argued from scratch. Ask explicitly: "What did we decide against?"
 
+### 1b. Split by Origin — CHECK `decision_source` FIRST
+
+If step 1 recorded a `decision_source` other than `none`, sort the candidates into two
+piles before writing anything:
+
+| Pile | What happens |
+|------|--------------|
+| **Already recorded there** | **Do NOT write an ADR.** Index it: title, status, and a link into the source |
+| **No home yet** | Write a full ADR here — this package becomes its origin |
+
+Present the split for confirmation:
+
+"These decisions are already recorded in {decision_source} — I'll link to them rather than
+restate them: {list}.
+
+These have no home yet, so I'll write ADRs for them here: {list}.
+
+Correct?"
+
+Restating an externally-owned decision produces a second description of the same system.
+It reads as harmless on the day it's written and is wrong within a month, because only one
+of the two copies gets updated. If the user asks for a copy anyway, say this once, then do
+as asked — but write the ADR body as a stub: title, status, one-sentence summary and a
+prominent link, never the full rationale. A stub can go stale in only one way; a duplicate
+rationale can contradict.
+
+**Precedence.** State it in the ADR index, once: "Where this package and {decision_source}
+disagree, {decision_source} wins." Without a declared winner, a future reader has two
+plausible documents and no rule.
+
 ### 2. Generate ADRs
 
 For each approved decision, generate an ADR using `./templates/adr.tmpl.md`:
@@ -73,15 +105,22 @@ Show each ADR for review before writing.
 
 ### 3. Update README
 
-Add each ADR to the README.md's ADR table. The Confirmation column is derived, not
-authored: an `Accepted` ADR whose Confirmation is still pending renders ⏳ — that's
-how a decision made ahead of its evidence stays visible from the index.
+Add every decision to the README.md's ADR table — both the ADRs written here and the ones
+owned elsewhere. One table, so a reader sees the whole decision surface in one place; the
+link target says who owns each entry, and ↗ marks the external ones.
+
+The Confirmation column is derived, not authored: an `Accepted` ADR whose Confirmation is
+still pending renders ⏳ — that's how a decision made ahead of its evidence stays visible
+from the index. For external decisions, leave it blank unless the source states one.
 
 ```markdown
 | [001](adr/001-serverless-first.md) | Serverless-First on AWS | Accepted | ✅ confirmed |
 | [007](adr/007-in-memory-index.md)  | In-Memory Index         | Accepted | ⏳ pending — p95 < 200 ms, not yet measured |
 | [022](adr/022-no-sync-backend.md)  | No Sync Backend         | Rejected | ↻ revisit: multi-device demand, or funded hosting |
+| [↗ RFC-14](../../specs/decisions/rfc-014.md) | Event Envelope Format | Accepted | owned by specs/decisions |
 ```
+
+If any row is external, put the precedence line directly above the table.
 
 ## NEXT STEP:
 

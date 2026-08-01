@@ -79,8 +79,65 @@ with `has_api: true` and no contract file is incomplete, and step 11 reports it 
 
 **One concern per file.** Each document has one reason to change.
 
+**Never two descriptions of one system.** This package is not automatically the origin of
+the decisions it describes. If the project already keeps decisions somewhere else — a spec
+with a rationale log, an RFC folder, a decision journal — that place stays the source of
+truth, and this package **links** to it rather than restating it. Copying a decision here
+creates a second description that drifts within weeks, and then nobody knows which one the
+code follows. Step 1 records where decisions live; step 8 writes ADRs only for decisions
+that have no home yet, and indexes the rest.
+
 **Code is truth.** Docs explain *why*; the code explains *what*. The API contract is the
 exception — there the document *is* the source of truth.
+
+---
+
+## INTERACTION MODES
+
+Every step runs in one of two modes, decided in step 1 and recorded in frontmatter as
+`interaction_mode`. The rule that never changes: **never invent content.** What changes is
+where the content comes from.
+
+### `discovery` — inputs are thin
+
+Decisions have not been made yet. Work through the step's questions conversationally, one
+thread at a time, and let the answers shape the document. This is the default when the
+inputs are a brief and little else.
+
+### `review` — inputs are ready
+
+Decisions are already made and written down — a PRD, a spec, a decision log. This is normal
+when architecture follows planning rather than preceding it. **Do not interrogate the user
+for what is already recorded.** Asking someone to re-state in chat what they wrote last week
+is not collaboration; it wastes their time and invites them to answer carelessly or skip
+the workflow.
+
+Instead, for each step:
+
+1. **Extract** the step's content from the input documents.
+2. **Present a filled draft**, with every claim carrying its provenance:
+   - `[PRD §4.2]` — taken from a document, cite where
+   - `[inferred]` — derived by you from what's there; say from what
+   - `[?]` — not in any input; this is a real question, and the only kind worth asking
+3. **Ask for correction, not for dictation:**
+
+   > "Here's what I extracted for {section}. Check the `[inferred]` rows especially — those
+   > are mine, not yours. {n} items marked `[?]` aren't in any input and I need answers.
+   >
+   > [A] Approve · [E] Correct something · [Q] Answer the open questions"
+
+Confirmation is still required — extraction is not authority, and an unreviewed draft is
+just a plausible-looking guess. What's removed is the interrogation, not the review.
+
+Drop the provenance markers when writing the final file; they belong to the conversation.
+Keep `[?]` items that remain unanswered as explicit `TODO` lines in the document — an
+unanswered question left visible is honest, one silently filled in is not.
+
+### Switching
+
+The mode is per-workflow but overridable per step. If a step's inputs turn out to be empty
+in `review` mode, say so and fall back to questions for that step. If in `discovery` mode
+the user says "it's all in the spec", switch to `review` and re-read.
 
 ---
 

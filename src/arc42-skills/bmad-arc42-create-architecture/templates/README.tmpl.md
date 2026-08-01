@@ -1,5 +1,6 @@
 ---
 stepsCompleted: []
+interaction_mode: '' # discovery (ask) | review (extract from inputs, confirm)
 execution_topology: '' # server | hybrid | local-process | browser
 features:
   has_api: false
@@ -7,6 +8,7 @@ features:
   has_services: false
   has_deployment: false
 inputDocuments: []
+decision_source: 'none' # path/URL where decisions are already recorded, if anywhere
 workflowType: 'arc42-architecture'
 project_name: '{{project_name}}'
 user_name: '{{user_name}}'
@@ -16,6 +18,18 @@ date: '{{date}}'
 # Architecture Documentation
 
 > **{{project_name}}** — {{system_description}}
+
+## Source of Truth
+
+<!-- Delete this section only if `decision_source` is 'none' — i.e. this package really is
+     where the decisions originate. Otherwise it is the first thing a reader needs. -->
+
+Architectural decisions for {{project_name}} are recorded in **{{decision_source}}**.
+This package is a *derived view*: it explains structure, and links to decisions rather than
+restating them. **Where the two disagree, {{decision_source}} wins.**
+
+ADRs under [`adr/`](adr/) cover only decisions that have no home there. Entries marked ↗ in
+the decision index point outward and are not maintained here.
 
 ## arc42-lite Mapping
 
@@ -55,7 +69,10 @@ This documentation follows an **arc42-lite** structure — a pragmatic adaptatio
 |----------|-------------|
 | [qa-strategy.md](3-quality/qa-strategy.md) | Testing approach, CI quality gates |
 
-### Architecture Decision Records
+### Decision Index
+
+Every architectural decision, wherever it lives. Rows marked ↗ are owned elsewhere —
+follow the link; they are not maintained in this package.
 
 Statuses: `Proposed` · `Accepted` · `Rejected` · `Deprecated` · `Superseded by ADR-NNN`.
 The last column is derived from each ADR: ⏳ = accepted but not yet verified,

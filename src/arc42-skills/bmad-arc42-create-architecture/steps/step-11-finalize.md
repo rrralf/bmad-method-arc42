@@ -37,9 +37,12 @@ Rebuild the Quick Navigation section with actual generated documents:
 - Update "1. Architecture" table with files that exist
 - Update "2. Development" table
 - Update "3. Quality" table
-- Update "Architecture Decision Records" table with all ADRs, deriving the last column
-  from each ADR file: ⏳ + the pending check for an `Accepted` ADR whose Confirmation is
-  not discharged, ↻ + the conditions for a `Rejected` one, ✅ otherwise
+- Update the "Decision Index" table with all ADRs **and** all externally-owned decisions
+  (↗ rows), deriving the last column from each ADR file: ⏳ + the pending check for an
+  `Accepted` ADR whose Confirmation is not discharged, ↻ + the conditions for a `Rejected`
+  one, ✅ otherwise
+- Keep the "Source of Truth" section if `decision_source` is set, with the precedence line
+  intact; delete it only when this package genuinely originates the decisions
 - Update "Diagrams" table with all generated diagrams
 - Fill "Deliberately Not Documented" — one row per section skipped by a feature flag **and**
   per section dropped by `execution_topology` (uptime targets, retry strategy, alerting

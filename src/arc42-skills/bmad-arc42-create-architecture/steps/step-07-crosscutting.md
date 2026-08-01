@@ -3,7 +3,9 @@
 ## MANDATORY EXECUTION RULES:
 
 - 📖 Read complete step file before acting
-- 🛑 Do NOT generate content without user input
+- 🛑 NEVER invent content. Check `interaction_mode` (see INTERACTION MODES in `../workflow.md`):
+  in `discovery` ask the questions below; in `review` extract from the input documents,
+  mark provenance, and ask only about what genuinely is not there
 - ✅ Communicate in {communication_language}, write output in {document_output_language}
 
 ## OUTPUT:

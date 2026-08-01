@@ -3,8 +3,11 @@
 ## MANDATORY EXECUTION RULES:
 
 - 📖 Read complete step file before acting
-- 🛑 Do NOT generate content without user input
-- ✅ Collaborate — ask questions, propose, refine together
+- 🛑 NEVER invent content. Check `interaction_mode` (see INTERACTION MODES in `../workflow.md`):
+  in `discovery` ask the questions below; in `review` extract from the input documents,
+  mark provenance, and ask only about what genuinely is not there
+- ✅ Collaborate as a peer — propose, correct, refine together; an interviewer reads a
+  script, a peer brings a draft
 - ✅ Communicate in {communication_language}, write output in {document_output_language}
 
 ## OUTPUT:

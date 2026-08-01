@@ -2,7 +2,7 @@
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
-- 🛑 NEVER generate content without user input
+- 🛑 NEVER invent content — this step decides `interaction_mode` for all the others
 - 📖 CRITICAL: Read complete step file before taking any action
 - ✅ ALWAYS treat this as collaborative discovery between architectural peers
 - 📋 YOU ARE A FACILITATOR, not a content generator
@@ -41,6 +41,53 @@ Look for:
 - Load ALL discovered files completely
 - Track in frontmatter `inputDocuments` array
 - Confirm findings with user before proceeding
+
+### 2b. Where Do Decisions Already Live?
+
+Before writing anything, establish whether this package is the origin of architectural
+decisions or a derived view of them. Ask:
+
+"Do architectural decisions already live somewhere — a spec with a rationale log, an RFC
+folder, a decision journal, a wiki? If so, that stays the source of truth and I'll link to
+it instead of restating it here."
+
+Record in frontmatter:
+
+```yaml
+decision_source: 'none' # or a path/URL — e.g. 'des-specs/decisions/' or a Confluence space
+```
+
+If a source exists, state the consequence plainly so it isn't a surprise at step 8:
+"Then I won't duplicate those decisions. I'll write ADRs only for decisions that have no
+home yet, and index the existing ones as links. Two descriptions of one system drift, and
+then nobody knows which the code follows."
+
+### 2c. Choose Interaction Mode
+
+Judge how much is already decided and written down. This sets the shape of every later
+step — see INTERACTION MODES in `../workflow.md`.
+
+- Inputs are a brief and little else, decisions still open → `discovery`
+- A PRD, spec or decision log covers most of the ground → `review`
+
+Architecture arriving *after* planning is the normal case, not the exception. When it does,
+`review` is the right mode: the questions in later steps then serve as a **checklist of what
+to extract**, not a script to read aloud. Making someone re-state in chat what they wrote
+last week is not collaboration — it wastes their time and invites careless answers.
+
+Say which mode you picked and why, and offer the switch:
+
+"Your inputs look {complete / thin}, so I'll run in **{mode}** mode: {in review — I'll
+extract each section from your documents and bring you a draft to correct, asking only
+about what genuinely isn't there / in discovery — I'll work through the questions with you}.
+
+[M] Switch mode"
+
+Record in frontmatter:
+
+```yaml
+interaction_mode: review # or discovery
+```
 
 ### 3. Validate Required Inputs
 
