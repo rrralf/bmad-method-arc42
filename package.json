@@ -5,7 +5,6 @@
   "keywords": ["bmad", "arc42", "architecture", "documentation", "adr"],
   "author": "rralf",
   "license": "MIT",
-  "main": "",
   "repository": {
     "type": "git",
     "url": "https://github.com/rrralf/bmad-method-arc42"
