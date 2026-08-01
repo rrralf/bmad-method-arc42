@@ -68,6 +68,18 @@ Because this module is a set of workflow instructions rather than executable cod
 - The README documented configuration in a root `config.yaml` that has never existed;
   configuration lives in `_bmad/arc42/config.yaml`, populated by the installer from
   `module.yaml`.
+- The workflow read `planning_artifacts` and `user_skill_level` from the core config, where
+  neither exists — both are `bmm` keys, so on a project without bmm the step-1 discovery glob
+  resolved to an undefined variable and found planning documents only if they happened to sit
+  under `docs/`. The module now declares its own `planning_artifacts` and defers to bmm's
+  value when bmm is installed; `user_skill_level` was unused and is gone.
+- The step overview demanded "at least 1 ADR" from step 8, contradicting the origin split
+  that legitimately yields zero local ADRs when `decision_source` owns every decision.
+- Step 11 left `adr/` and `diagrams/` empty and unexplained when nothing landed in them —
+  the exact ambiguity the *Deliberately Not Documented* table exists to remove, and empty
+  directories do not survive a commit anyway.
+- `qa-strategy.tmpl.md` still assumed dev/staging/prod environments — the same server-side
+  assumption removed from six other sections. It now has a local-topology variant.
 
 ## [0.1.0] — 2026-03-29
 

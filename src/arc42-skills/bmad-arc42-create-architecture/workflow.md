@@ -52,15 +52,22 @@ The workflow generates an arc42-lite documentation structure:
 
 ### Configuration Loading
 
-Load config from `{project-root}/_bmad/core/config.yaml` and resolve:
+Load core config from `{project-root}/_bmad/core/config.yaml` and resolve:
 
-- `project_name`, `output_folder`, `planning_artifacts`, `user_name`
-- `communication_language`, `document_output_language`, `user_skill_level`
+- `project_name`, `output_folder`, `user_name`
+- `communication_language`, `document_output_language`
 - `date` as system-generated current datetime
 
-Load arc42 module config and resolve:
+Load arc42 module config from `{project-root}/_bmad/arc42/config.yaml` and resolve:
 
 - `architecture_output` (default: `docs/architecture`)
+- `planning_artifacts` (default: `{output_folder}/planning-artifacts`)
+
+**Do not read `planning_artifacts` from the core config — it is not there.** The key belongs
+to the `bmm` module, so it exists only when bmm is installed, and then in
+`_bmad/bmm/config.yaml`. This module declares its own copy in `module.yaml` precisely so the
+workflow runs without bmm. If `_bmad/bmm/config.yaml` exists and disagrees, prefer bmm's
+value: the project is already storing artifacts there.
 
 ### Paths
 
@@ -201,7 +208,7 @@ Read fully and follow: `./steps/step-01-init.md` to begin the workflow.
 | 05 | 04-pipeline.md, 03-api-contract.yml, 05-services/*.md | §6 | per feature flag |
 | 06 | 06-deployment.md | §7 | has_deployment |
 | 07 | 07-security.md | §8 | always |
-| 08 | adr/001-*.md (one per decision) | §9 | always (at least 1 ADR) |
+| 08 | adr/001-*.md + Decision Index | §9 | always — but **zero** local ADRs is a valid outcome when `decision_source` owns every decision |
 | 09 | qa-strategy.md | §10 | always |
 | 10 | packages.md, patterns.md | 4+1 dev view | always |
 | 11 | README.md (final update with navigation) | — | always |

@@ -17,6 +17,16 @@ architecture_output:
   default: "docs/architecture"
   result: "{project-root}/{value}"
 
+# Declared here on purpose. `planning_artifacts` is a bmm key: it lives in
+# _bmad/bmm/config.yaml and exists only when bmm is installed. The workflow reads it on
+# step 1 to find PRDs and briefs, so without a copy of our own the discovery glob resolves
+# to an undefined variable on any project that installed arc42 alone. Same default as bmm,
+# so the two agree when both are present.
+planning_artifacts:
+  prompt: "Where are planning artifacts (briefs, PRDs, specs) stored?"
+  default: "{output_folder}/planning-artifacts"
+  result: "{project-root}/{value}"
+
 # Directories to create during installation
 directories:
   - "{architecture_output}"

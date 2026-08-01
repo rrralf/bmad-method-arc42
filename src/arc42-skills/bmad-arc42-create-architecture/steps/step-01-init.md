@@ -24,9 +24,14 @@ Look for existing `{architecture_output}/README.md`:
 ### 2. Input Document Discovery
 
 Discover and load context documents from:
-- `{planning_artifacts}/**`
+- `{planning_artifacts}/**` — resolved from `_bmad/arc42/config.yaml`; if `_bmad/bmm/config.yaml`
+  exists and sets a different value, prefer bmm's (the project already stores artifacts there)
 - `{output_folder}/**`
 - `{project-root}/docs/**`
+
+If `{planning_artifacts}` resolves to a path that does not exist, say so rather than searching
+on silently. An empty result from an unconfigured path looks exactly like a project with no
+planning documents, and that difference decides whether step 3 refuses to continue.
 
 Look for:
 - Product Brief (`*brief*.md`)

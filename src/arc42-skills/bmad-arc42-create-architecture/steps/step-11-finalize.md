@@ -17,6 +17,13 @@ List all generated files in `{architecture_output}/`:
 - Verify each file exists and is non-empty
 - Note any missing files (skipped due to features)
 
+**Empty directories.** `adr/` and `diagrams/` are created up front and may legitimately end
+up empty — every decision owned by `decision_source`, every diagram inline in the document
+that uses it. An empty directory left as-is reads as "forgotten" and does not survive a git
+commit anyway. For each one still empty, do both:
+- delete it, **or** place a one-paragraph `README.md` in it saying why it is empty;
+- add a row to *Deliberately Not Documented* — the same rule as any other absence.
+
 **API-first gate.** If `has_api: true`, the machine-readable contract
 (`1-architecture/03-api-contract.yml`, or the `.graphql`/`.proto` variant) MUST exist and
 MUST contain at least one operation. If it is missing, empty, or has no `paths` entries:

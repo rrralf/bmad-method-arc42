@@ -46,12 +46,19 @@ docs/architecture/
 
 ## Install
 
-> **Requires BMAD installer v6.8+.** Use the `--custom-source` flag (a comma-separated
-> list of Git URLs or local paths). The installer finds the module definition in `src/`
-> automatically — no need to point at the subfolder. A **fresh** non-interactive
-> (`--yes`) install also requires `--tools` with a real IDE id (e.g. `claude-code`);
-> run `npx bmad-method install --list-tools` to see valid ids. Use `--directory` to
-> target a project other than the current folder.
+> **Requires BMAD installer v6.10+** — the only version this module is tested against.
+> Earlier versions may work but are unverified. Use the `--custom-source` flag (a
+> comma-separated list of Git URLs or local paths); the installer reads
+> `.claude-plugin/marketplace.json` and resolves the module from the `skills` paths listed
+> there, which are relative to the repository root. A **fresh** non-interactive (`--yes`)
+> install also requires `--tools` with a real IDE id (e.g. `claude-code`); run
+> `npx bmad-method install --list-tools` to see valid ids. Use `--directory` to target a
+> project other than the current folder, and `@<branch-or-tag>` after a Git URL to install
+> from something other than the default branch.
+>
+> The module installs standalone — `bmm` is not required. It declares its own
+> `planning_artifacts` so document discovery works either way, and defers to bmm's value
+> when bmm is present.
 
 ### Install directly from Git (recommended — no clone needed)
 
