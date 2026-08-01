@@ -55,6 +55,8 @@ Ask the user or infer from documents:
 "Based on what I've read, I'm detecting these architectural features:
 
 - **API?** Does the system expose an API to external consumers? → `has_api`
+  (this project is API-first — saying yes means a machine-readable `03-api-contract.yml`
+  ships as a mandatory part of the documentation package)
 - **Pipeline?** Is there a data processing pipeline or async workflow? → `has_pipeline`
 - **Services?** Are there multiple distinct services/components to document separately? → `has_services`
 - **Deployment?** Is there cloud/server infrastructure to document? → `has_deployment`

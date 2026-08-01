@@ -28,7 +28,7 @@ The workflow generates an arc42-lite documentation structure:
 ├── 1-architecture/
 │   ├── 01-executive-brief.md    ← §1,3,4: context, goals, strategy (step 2)
 │   ├── 02-constraints-nfr.md    ← §2: NFRs, constraints (step 3)
-│   ├── 03-api-contract.yml      ← §6: OpenAPI (step 5, if has_api)
+│   ├── 03-api-contract.yml      ← §6: OpenAPI (step 5, mandatory if has_api)
 │   ├── 04-building-blocks.md    ← §5: building blocks, contracts, domain model (step 4)
 │   ├── 04-pipeline.md           ← §6: data/processing pipeline (step 5, if has_pipeline)
 │   ├── 05-services/             ← §6: per-service docs (step 5, if has_services)
@@ -69,13 +69,28 @@ Load arc42 module config and resolve:
 
 ---
 
+## PRINCIPLES
+
+**API-first.** If the system exposes an API, its machine-readable contract
+(`03-api-contract.yml`, OpenAPI) is a **mandatory** artifact of the documentation
+package — not an optional extra, not a prose description, not something deferred to
+implementation. The contract is written first and the code conforms to it. A package
+with `has_api: true` and no contract file is incomplete, and step 11 reports it as such.
+
+**One concern per file.** Each document has one reason to change.
+
+**Code is truth.** Docs explain *why*; the code explains *what*. The API contract is the
+exception — there the document *is* the source of truth.
+
+---
+
 ## FEATURE DETECTION
 
 During step 1 (init), detect or ask which features apply:
 
 ```yaml
 features:
-  has_api: true/false         # generates 03-api-contract.yml
+  has_api: true/false         # generates 03-api-contract.yml — MANDATORY when true (API-first)
   has_pipeline: true/false    # generates 04-pipeline.md
   has_services: true/false    # generates 05-services/*.md
   has_deployment: true/false  # generates 06-deployment.md (skip for local-only)
