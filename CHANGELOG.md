@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Because this module is a set of workflow instructions rather than executable code,
 "changed behaviour" means what the workflow asks, generates, and refuses to skip.
 
-## [Unreleased] — 0.3.0
+## [0.3.0] — 2026-11-17
 
 BMAD 6.12 compatibility, and fixes for defects found by the first independent stand run
 (an executor and a verifier that did not write the instructions).
@@ -161,6 +161,6 @@ Initial release, plus the adjustments made before versioning began.
 - The domain model moved out of a single top-level section into each block's Level 2,
   where the entities actually belong.
 
-[Unreleased]: https://github.com/rrralf/bmad-method-arc42/compare/v0.2.0...HEAD
+[0.3.0]: https://github.com/rrralf/bmad-method-arc42/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/rrralf/bmad-method-arc42/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/rrralf/bmad-method-arc42/releases/tag/v0.1.0
