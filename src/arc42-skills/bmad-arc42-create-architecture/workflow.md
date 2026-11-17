@@ -78,6 +78,10 @@ The workflow generates an arc42-lite documentation structure:
 
 ### Customization
 
+`{skill-root}` is the directory holding this `workflow.md` — in `.claude/skills/` for a BMAD
+install, in the plugin cache for a plugin install. `{project-root}` is the working directory.
+
+
 Run `uv run {project-root}/_bmad/scripts/resolve_customization.py --skill {skill-root} --project-root {project-root} --key workflow`.
 It merges this skill's `customize.toml` with `_bmad/custom/bmad-arc42-create-architecture.toml`
 (team) and `.user.toml` (personal). If the script is missing or fails, read
@@ -104,10 +108,24 @@ It prints merged JSON from `_bmad/config.toml`, `_bmad/config.user.toml` and the
 
 **Fallback** (installer older than 6.10, or the script fails): read
 `_bmad/core/config.yaml`, `_bmad/arc42/config.yaml` and, if present, `_bmad/bmm/config.yaml`
-for the same keys. Missing keys take these defaults — never block:
-`architecture_output` = `{project-root}/docs/architecture`,
-`planning_artifacts` = `{project-root}/{output_folder}/planning-artifacts`,
-`output_folder` = `_bmad-output`, languages = `English`.
+for the same keys.
+
+**No BMAD at all** — installed as a Claude Code plugin, there is no `_bmad/` and none of the
+above exists. That is a supported setup, not an error: skip the scripts and take every key
+from the defaults below. Missing keys take these defaults in any setup — never block:
+
+| Key | Default |
+|-----|---------|
+| `architecture_output` | `{project-root}/docs/architecture` |
+| `output_folder` | `_bmad-output` |
+| `planning_artifacts` | `{project-root}/{output_folder}/planning-artifacts` |
+| `project_name` | the product name from the input documents (PRD/spec title); else the project directory name |
+| `user_name` | omit — greet without a name, and leave the field out of README frontmatter rather than writing a placeholder |
+| `communication_language` | the language the user writes in; if they have written nothing yet (just the slash command), the language of the input documents |
+| `document_output_language` | the language of the input documents; if they mix languages, ask once in step 1 |
+
+The language defaults apply only when no configuration exists. A configured value — even
+`English` — is the user's choice and wins over the inputs.
 
 `planning_artifacts` is not a core key. It belongs to `bmm`, which this module does not
 require, so this module declares its own copy at install time, with the same default.

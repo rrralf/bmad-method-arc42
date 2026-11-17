@@ -6,8 +6,8 @@
   "plugins": [
     {
       "name": "arc42",
-      "version": "0.3.0",
-      "source": "./src/arc42-skills",
+      "version": "0.3.1",
+      "source": "./",
       "strict": false,
       "skills": ["./src/arc42-skills/bmad-arc42-create-architecture"],
       "description": "arc42-lite architecture documentation workflow — multi-file docs with ADRs, diagrams, and arc42 section mapping",

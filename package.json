@@ -1,6 +1,6 @@
 {
   "name": "bmad-method-arc42",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "arc42 architecture documentation generator for BMAD: a Claude Code skill that writes a multi-file docs-as-code package with ADRs, C4 diagrams and an arc42 section map.",
   "keywords": [
     "bmad",

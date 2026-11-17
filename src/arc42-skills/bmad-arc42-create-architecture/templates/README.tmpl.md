@@ -12,7 +12,7 @@ inputDocuments: []
 decision_source: [] # paths/URLs where decisions are already recorded; empty = this package originates them
 workflowType: 'arc42-architecture'
 project_name: '{{project_name}}'
-user_name: '{{user_name}}'
+user_name: '{{user_name}}' # omit this line when no user_name is configured
 date: '{{date}}'
 ---
 
