@@ -43,8 +43,8 @@ quarter and re-argued from scratch. Ask explicitly: "What did we decide against?
 
 ### 1b. Split by Origin — CHECK `decision_source` FIRST
 
-If step 1 recorded a `decision_source` other than `none`, sort the candidates into two
-piles before writing anything:
+If step 1 recorded any `decision_source`, sort the candidates into two piles before
+writing anything:
 
 | Pile | What happens |
 |------|--------------|
@@ -53,7 +53,7 @@ piles before writing anything:
 
 Present the split for confirmation:
 
-"These decisions are already recorded in {decision_source} — I'll link to them rather than
+"These decisions are already recorded in {source} — I'll link to them rather than
 restate them: {list}.
 
 These have no home yet, so I'll write ADRs for them here: {list}.
@@ -67,11 +67,23 @@ as asked — but write the ADR body as a stub: title, status, one-sentence summa
 prominent link, never the full rationale. A stub can go stale in only one way; a duplicate
 rationale can contradict.
 
-**Precedence.** State it in the ADR index, once: "Where this package and {decision_source}
-disagree, {decision_source} wins." Without a declared winner, a future reader has two
-plausible documents and no rule.
+**Precedence.** State it in the ADR index, once: "Where this package and {sources} disagree,
+the sources win, in the order listed." Without a declared winner, a future reader has two
+plausible documents and no rule. With more than one source, the order recorded in step 1
+is the order of precedence between them too.
+
+**Status of an external decision** is whatever its source says, mapped onto the vocabulary
+below when the mapping is unambiguous ("принято" → `Accepted`, "rejected" → `Rejected`).
+When the source states no status, or one that doesn't map, write `— (not stated in source)`
+— never pick `Accepted` on its behalf. The vocabulary governs ADRs written here; an index
+row only reports what its owner says. A source status with a condition attached ("accepted
+before measurement") maps to the plain status, and the condition goes into the last column
+as ⏳ — the same way a local `Accepted` ADR with a pending Confirmation renders.
 
 ### 2. Generate ADRs
+
+If the *No home yet* pile is empty, there is nothing to generate: say so in one line and go
+to section 3. Zero local ADRs is a valid outcome when the sources own every decision.
 
 For each approved decision, generate an ADR using `./templates/adr.tmpl.md`:
 
@@ -124,4 +136,4 @@ If any row is external, put the precedence line directly above the table.
 
 ## NEXT STEP:
 
-After approval, update frontmatter, then load `./step-09-quality.md`.
+After approval, append `8` to `stepsCompleted` (see *Step State* in `../workflow.md`) — also when zero local ADRs were written, because the Decision Index was still built — then load `./step-09-quality.md`.

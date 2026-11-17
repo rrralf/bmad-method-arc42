@@ -46,8 +46,8 @@ docs/architecture/
 
 ## Install
 
-> **Requires BMAD installer v6.10+** — the only version this module is tested against.
-> Earlier versions may work but are unverified. Use the `--custom-source` flag (a
+> **Requires BMAD installer v6.10+.** Tested on 6.10.0 and 6.12.4 (standalone and alongside
+> `bmm`). Earlier versions are unverified. Use the `--custom-source` flag (a
 > comma-separated list of Git URLs or local paths); the installer reads
 > `.claude-plugin/marketplace.json` and resolves the module from the `skills` paths listed
 > there, which are relative to the repository root. A **fresh** non-interactive (`--yes`)
@@ -119,14 +119,36 @@ rm -rf _bmad/arc42 .claude/skills/bmad-arc42-create-architecture
 
 ## Configuration
 
-The installer asks where architecture docs should live and writes the answer to
-`_bmad/arc42/config.yaml` (the prompt and its default come from `src/arc42-skills/module.yaml`):
+The installer asks two questions (prompts and defaults in `src/arc42-skills/module.yaml`)
+and writes the answers to `_bmad/config.toml` under `[modules.arc42]`:
 
-```yaml
-architecture_output: docs/architecture
+```toml
+[modules.arc42]
+architecture_output = "{project-root}/docs/architecture"
+planning_artifacts = "{project-root}/_bmad-output/planning-artifacts"
 ```
 
-Edit that file to change the location for an existing project.
+`_bmad/config.toml` is regenerated on every install. To change a value durably, re-run the
+installer or pin it in `_bmad/custom/config.toml`. When `bmm` is installed, its
+`planning_artifacts` takes precedence.
+
+### Customization
+
+Like the standard BMAD 6.12 skills, the workflow reads `customize.toml` through
+`resolve_customization.py`. Override it in `_bmad/custom/bmad-arc42-create-architecture.toml`:
+
+```toml
+[workflow]
+persistent_facts = [
+  "We deploy only to AWS eu-central-1.",
+  "file:{project-root}/docs/standards/*.md",
+]
+on_complete = "Open a PR with the generated docs."
+```
+
+`persistent_facts` are treated as settled decisions: the workflow cites them instead of
+asking. `activation_steps_prepend` / `activation_steps_append` run before and after
+configuration loading.
 
 ## License
 

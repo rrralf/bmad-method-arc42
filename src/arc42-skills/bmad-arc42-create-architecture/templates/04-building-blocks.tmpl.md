@@ -37,7 +37,7 @@
 | **Technology** | {{languages, frameworks, services}} |
 | **NFR overrides** | {{block-specific quality requirements, if different from system-level}} |
 | **Risks** | {{what can go wrong in this block}} |
-| **Key decisions** | → [ADR-xxx](../adr/xxx.md) |
+| **Key decisions** | → {{[ADR-NNN](../adr/NNN-slug.md) or [↗ source-id](link) — whoever owns it}} |
 
 #### Exposes (published contracts)
 

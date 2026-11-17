@@ -30,4 +30,4 @@ Generate `qa-strategy.md` using template. Show for review.
 
 ## NEXT STEP:
 
-After approval, update frontmatter, then load `./step-10-devview.md`.
+After approval, append `9` to `stepsCompleted` (see *Step State* in `../workflow.md`), then load `./step-10-devview.md`.

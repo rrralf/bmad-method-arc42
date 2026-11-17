@@ -8,6 +8,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Because this module is a set of workflow instructions rather than executable code,
 "changed behaviour" means what the workflow asks, generates, and refuses to skip.
 
+## [Unreleased] — 0.3.0
+
+BMAD 6.12 compatibility, and fixes for defects found by the first independent stand run
+(an executor and a verifier that did not write the instructions).
+
+### Added
+
+- **Inputs produced by BMAD 6.12 skills.** Step 1 now discovers `SPEC.md` (`bmad-spec`),
+  `ARCHITECTURE-SPINE.md` (`bmad-architecture`), `DESIGN.md` / `EXPERIENCE.md` (`bmad-ux`),
+  `AGENTS.md` (`bmad-project-context`) and the `.memlog.md` rationale logs next to them.
+  A spec now satisfies the input requirement — before, a project planned with `bmad-spec`
+  alone was refused for lacking a PRD.
+- **Decision sources are detected, not only asked about.** A spine's `AD-n` entries, a
+  decision-log document or a spec memlog are proposed as `decision_source` automatically.
+- **`customize.toml`** with the standard BMAD fields: `persistent_facts` (treated as settled
+  decisions, cited instead of asked), `activation_steps_prepend` / `_append`, `on_complete`.
+- **`stepsSkipped`** in README frontmatter, alongside `stepsCompleted`.
+
+### Changed
+
+- **Configuration is read through `resolve_config.py`** (`_bmad/config.toml` plus
+  `_bmad/custom/` overrides), with the per-module `config.yaml` files as a fallback.
+- **`decision_source` is a list**, in precedence order. Decisions often live in more than
+  one place (a spine and a PRD section); a single path forced the second owner into prose.
+- **External decisions keep their owner's status.** When the source states none, the index
+  says `— (not stated in source)` instead of the workflow choosing `Accepted` on its behalf.
+- **Templates link decisions to their owner.** Executive brief, building blocks and
+  security templates linked only to local `../adr/` files, which pushed toward duplicating
+  externally-owned decisions; they now take a local ADR or a ↗ source link.
+- **Absences say what kind they are**: "by decision" or "consequence of …". The security
+  template labelled every absence "by decision", contradicting inputs that say otherwise.
+- **Input validation runs first** in step 1, before the questions about decision sources and
+  interaction mode, which all presuppose a product.
+- `module-help.csv`: phase `plan` (6.12 naming) instead of `3-solutioning`.
+
+### Fixed
+
+- `arch_out` was built as `{project-root}/{architecture_output}`, but the configured value
+  already contains `{project-root}` — a doubled prefix.
+- Step 11 wrote every step number into `stepsCompleted`, including steps skipped by a flag,
+  so the frontmatter claimed work that was not done. Steps 4–10 said "update frontmatter"
+  without saying to what. Every step now appends its own number to exactly one list.
+- Step 3 asked "users/requests per day" regardless of topology; local and browser systems
+  get a per-machine data question instead, and the dropped question goes to *Deliberately
+  Not Documented*.
+- The README template stated API-first as a principle even for systems without an API.
+- Step 8 asked to show and generate ADRs when there were none to write.
+- Step 11's coverage summary counted only local ADRs, reporting "0" for a package whose
+  decisions are all indexed from a source.
+
 ## [0.2.0] — 2026-08-01
 
 ### Added
@@ -105,5 +155,6 @@ Initial release, plus the adjustments made before versioning began.
 - The domain model moved out of a single top-level section into each block's Level 2,
   where the entities actually belong.
 
+[Unreleased]: https://github.com/rrralf/bmad-method-arc42/compare/v0.2.0...HEAD
 [0.2.0]: https://github.com/rrralf/bmad-method-arc42/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/rrralf/bmad-method-arc42/releases/tag/v0.1.0

@@ -48,8 +48,9 @@ Rebuild the Quick Navigation section with actual generated documents:
   (↗ rows), deriving the last column from each ADR file: ⏳ + the pending check for an
   `Accepted` ADR whose Confirmation is not discharged, ↻ + the conditions for a `Rejected`
   one, ✅ otherwise
-- Keep the "Source of Truth" section if `decision_source` is set, with the precedence line
-  intact; delete it only when this package genuinely originates the decisions
+- Keep the "Source of Truth" section if `decision_source` lists anything, one line per
+  source in precedence order, with the precedence line intact; delete it only when the
+  list is empty and this package genuinely originates the decisions
 - Update "Diagrams" table with all generated diagrams
 - Fill "Deliberately Not Documented" — one row per section skipped by a feature flag **and**
   per section dropped by `execution_topology` (uptime targets, retry strategy, alerting
@@ -57,7 +58,8 @@ Rebuild the Quick Navigation section with actual generated documents:
   apply* and *what would bring it back*. Never leave this section empty when flags were
   false: an unexplained gap is indistinguishable from an oversight
 - Remove placeholder rows for files that weren't generated
-- Update frontmatter: `stepsCompleted: [1,2,3,4,5,6,7,8,9,10,11]`
+- Append `11` to `stepsCompleted`. Do **not** add skipped steps to it — they stay in
+  `stepsSkipped`; together the two lists must cover 1–11 exactly once
 
 ### 3. Summary Report
 
@@ -87,7 +89,7 @@ are the decisions the team owes evidence for}
 | §6 | Runtime View | {✅ or ⏭️ skipped} |
 | §7 | Deployment View | {✅ or ⏭️ skipped} |
 | §8 | Cross-cutting | ✅ |
-| §9 | Decisions (ADRs) | ✅ ({n} ADRs) |
+| §9 | Decisions (ADRs) | ✅ ({n} local ADRs, {m} indexed from sources) |
 | §10 | Quality | ✅ |
 
 **Next steps:**
@@ -103,3 +105,7 @@ are the decisions the team owes evidence for}
 ✅ All frontmatter updated
 ✅ Summary presented to user
 ✅ Workflow complete
+
+## ON COMPLETE
+
+Run `{workflow.on_complete}` if it is non-empty (see *Customization* in `../workflow.md`).

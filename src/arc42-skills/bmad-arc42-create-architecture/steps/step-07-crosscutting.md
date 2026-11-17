@@ -66,4 +66,4 @@ variant sections matching `execution_topology` and delete the others. Show for r
 
 ## NEXT STEP:
 
-After approval, update frontmatter, then load `./step-08-decisions.md`.
+After approval, append `7` to `stepsCompleted` (see *Step State* in `../workflow.md`), then load `./step-08-decisions.md`.

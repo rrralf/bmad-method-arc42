@@ -6,7 +6,7 @@
 - 🛑 NEVER invent content. Check `interaction_mode` (see INTERACTION MODES in `../workflow.md`):
   in `discovery` ask the questions below; in `review` extract from the input documents,
   mark provenance, and ask only about what genuinely is not there
-- ⚙️ SKIP if `has_deployment` is false — load step-07 directly
+- ⚙️ SKIP if `has_deployment` is false — append `6` to `stepsSkipped`, load step-07 directly
 - ✅ Communicate in {communication_language}, write output in {document_output_language}
 
 ## OUTPUT:
@@ -37,4 +37,4 @@ Generate `06-deployment.md` using template. Show for review.
 
 ## NEXT STEP:
 
-After approval, update frontmatter, then load `./step-07-crosscutting.md`.
+After approval, append `6` to `stepsCompleted` (see *Step State* in `../workflow.md`), then load `./step-07-crosscutting.md`.

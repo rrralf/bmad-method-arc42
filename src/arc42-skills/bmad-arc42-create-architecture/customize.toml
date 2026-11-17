@@ -1,0 +1,27 @@
+# DO NOT EDIT -- overwritten on every update.
+#
+# Customization surface for bmad-arc42-create-architecture. Override in
+#   _bmad/custom/bmad-arc42-create-architecture.toml       (team, committed)
+#   _bmad/custom/bmad-arc42-create-architecture.user.toml  (personal)
+# Merge rules (BMad): scalars — override wins; arrays — append.
+
+[workflow]
+
+# Steps to run before configuration loading. Overrides append.
+activation_steps_prepend = []
+
+# Steps to run after the greeting, before step 1 starts discovering inputs.
+# Overrides append.
+activation_steps_append = []
+
+# Facts the workflow holds for the whole run and never asks about — org standards,
+# mandated platforms, compliance regimes. Each entry is a sentence, or a file
+# reference "file:{project-root}/docs/standards.md" (globs allowed). Overrides append.
+#
+# They behave like recorded decisions: a step extracts from them instead of asking,
+# and cites them as [persistent fact].
+persistent_facts = []
+
+# Executed once step 11 has written the final README and presented the summary.
+# Override wins. Empty — nothing extra.
+on_complete = ""

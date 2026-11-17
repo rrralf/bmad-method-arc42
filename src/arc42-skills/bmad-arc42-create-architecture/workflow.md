@@ -16,6 +16,23 @@ This uses **micro-file architecture** with **per-step file output**:
 - State tracked in `{architecture_output}/README.md` frontmatter
 - You NEVER proceed to a step file unless the user approves and indicates continuation
 
+### Step State
+
+Two frontmatter lists in `{architecture_output}/README.md` record progress, and every step
+ends by updating exactly one of them:
+
+- `stepsCompleted` — steps that ran and whose output the user approved. Append the step
+  number **after** approval, never before.
+- `stepsSkipped` — steps that did not run because a feature flag or `execution_topology`
+  excluded them. Append the number at the moment the step is skipped.
+
+A step never appears in both, and a skipped step is never written into `stepsCompleted`:
+the frontmatter would then claim work that was not done. Resuming (`step-01b-continue.md`)
+starts at the lowest step number in neither list.
+
+Every step's review ends in the same menu — `[A] Approve · [E] Edit` — even where the step
+file doesn't spell it out. "After approval" in a step means after `[A]`.
+
 ---
 
 ## OUTPUT STRUCTURE
@@ -50,28 +67,44 @@ The workflow generates an arc42-lite documentation structure:
 
 ## INITIALIZATION
 
+### Customization
+
+Run `uv run {project-root}/_bmad/scripts/resolve_customization.py --skill {skill-root} --project-root {project-root} --key workflow`.
+It merges this skill's `customize.toml` with `_bmad/custom/bmad-arc42-create-architecture.toml`
+(team) and `.user.toml` (personal). If the script is missing or fails, read
+`./customize.toml` and use its defaults — never block on it.
+
+- Run `{workflow.activation_steps_prepend}` before configuration loading.
+- Hold `{workflow.persistent_facts}` as standing context for the whole run — they are
+  constraints the user has already settled (org standards, mandated platforms), so treat
+  them like a recorded decision: don't ask about them, cite them as `[persistent fact]`.
+- Run `{workflow.activation_steps_append}` after the greeting, before step 1's discovery.
+
 ### Configuration Loading
 
-Load core config from `{project-root}/_bmad/core/config.yaml` and resolve:
+Run `uv run {project-root}/_bmad/scripts/resolve_config.py --project-root {project-root}`.
+It prints merged JSON from `_bmad/config.toml`, `_bmad/config.user.toml` and the
+`_bmad/custom/` overrides. Resolve:
 
-- `project_name`, `output_folder`, `user_name`
-- `communication_language`, `document_output_language`
+- under `core`: `project_name`, `output_folder`, `user_name`, `communication_language`,
+  `document_output_language`
+- under `modules.arc42`: `architecture_output`, `planning_artifacts`
+- under `modules.bmm`, if present: `planning_artifacts` — **prefer it over arc42's** when
+  the two differ; the project is already storing artifacts there
 - `date` as system-generated current datetime
 
-Load arc42 module config from `{project-root}/_bmad/arc42/config.yaml` and resolve:
+**Fallback** (installer older than 6.10, or the script fails): read
+`_bmad/core/config.yaml`, `_bmad/arc42/config.yaml` and, if present, `_bmad/bmm/config.yaml`
+for the same keys. Missing keys take the defaults in `module.yaml`; never block.
 
-- `architecture_output` (default: `docs/architecture`)
-- `planning_artifacts` (default: `{output_folder}/planning-artifacts`)
-
-**Do not read `planning_artifacts` from the core config — it is not there.** The key belongs
-to the `bmm` module, so it exists only when bmm is installed, and then in
-`_bmad/bmm/config.yaml`. This module declares its own copy in `module.yaml` precisely so the
-workflow runs without bmm. If `_bmad/bmm/config.yaml` exists and disagrees, prefer bmm's
-value: the project is already storing artifacts there.
+`planning_artifacts` is not a core key. It belongs to `bmm`, which this module does not
+require, so `module.yaml` declares its own copy with the same default.
 
 ### Paths
 
-- `arch_out` = `{project-root}/{architecture_output}`
+Resolved values already contain `{project-root}` — substitute it, never prefix it again.
+
+- `arch_out` = `{architecture_output}`
 - Templates are relative to this workflow: `./templates/`
 
 ---
@@ -208,7 +241,7 @@ Read fully and follow: `./steps/step-01-init.md` to begin the workflow.
 | 05 | 04-pipeline.md, 03-api-contract.yml, 05-services/*.md | §6 | per feature flag |
 | 06 | 06-deployment.md | §7 | has_deployment |
 | 07 | 07-security.md | §8 | always |
-| 08 | adr/001-*.md + Decision Index | §9 | always — but **zero** local ADRs is a valid outcome when `decision_source` owns every decision |
+| 08 | adr/001-*.md + Decision Index | §9 | always — but **zero** local ADRs is a valid outcome when the `decision_source` entries own every decision |
 | 09 | qa-strategy.md | §10 | always |
 | 10 | packages.md, patterns.md | 4+1 dev view | always |
 | 11 | README.md (final update with navigation) | — | always |
