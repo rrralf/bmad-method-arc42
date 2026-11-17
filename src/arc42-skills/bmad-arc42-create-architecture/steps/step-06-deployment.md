@@ -6,7 +6,9 @@
 - 🛑 NEVER invent content. Check `interaction_mode` (see INTERACTION MODES in `../workflow.md`):
   in `discovery` ask the questions below; in `review` extract from the input documents,
   mark provenance, and ask only about what genuinely is not there
-- ⚙️ SKIP if `has_deployment` is false — append `6` to `stepsSkipped`, load step-07 directly
+- ⚙️ SKIP if `has_deployment` is false. Normally step 5 already skipped past this file and
+  recorded it; if you got here anyway (resume), add `6` to `stepsSkipped` only if absent,
+  then load step-07
 - ✅ Communicate in {communication_language}, write output in {document_output_language}
 
 ## OUTPUT:

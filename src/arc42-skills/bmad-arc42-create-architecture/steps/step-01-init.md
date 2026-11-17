@@ -42,7 +42,7 @@ Look for:
 | PRD | `*prd*.md` | `bmad-prd` |
 | Product Brief | `*brief*.md` | `bmad-product-brief` |
 | Product Strategy | `*strategy*.md` | — |
-| Architecture spine | `**/ARCHITECTURE-SPINE.md` (+ its `.memlog.md`) | `bmad-architecture` |
+| Architecture spine | `**/ARCHITECTURE-SPINE.md` (+ its `.memlog.md`), **or any document whose frontmatter says `type: architecture-spine`** — spines get renamed | `bmad-architecture` |
 | UX | `**/DESIGN.md`, `**/EXPERIENCE.md`, `*ux-design*.md` | `bmad-ux` (older: `bmad-create-ux-design`) |
 | Research | `*research*.md` | research skills |
 | Project context | `**/project-context.md`, `AGENTS.md` | `bmad-project-context` |

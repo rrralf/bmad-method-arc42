@@ -87,4 +87,5 @@ Update step state (see *Step State* in `../workflow.md`):
 
 Then:
 - If `has_deployment` → load `./step-06-deployment.md`
-- If not → append `6` to `stepsSkipped` and load `./step-07-crosscutting.md`
+- If not → append `6` to `stepsSkipped` and load `./step-07-crosscutting.md` directly —
+  step 6 is not opened, so this is the one place its skip gets recorded

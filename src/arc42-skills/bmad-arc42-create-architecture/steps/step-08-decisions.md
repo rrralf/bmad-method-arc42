@@ -67,7 +67,8 @@ as asked — but write the ADR body as a stub: title, status, one-sentence summa
 prominent link, never the full rationale. A stub can go stale in only one way; a duplicate
 rationale can contradict.
 
-**Precedence.** State it in the ADR index, once: "Where this package and {sources} disagree,
+**Precedence.** State it once, in README's *Source of Truth* section — not again above the
+table: "Where this package and {sources} disagree,
 the sources win, in the order listed." Without a declared winner, a future reader has two
 plausible documents and no rule. With more than one source, the order recorded in step 1
 is the order of precedence between them too.
@@ -123,16 +124,20 @@ link target says who owns each entry, and ↗ marks the external ones.
 
 The Confirmation column is derived, not authored: an `Accepted` ADR whose Confirmation is
 still pending renders ⏳ — that's how a decision made ahead of its evidence stays visible
-from the index. For external decisions, leave it blank unless the source states one.
+from the index.
+
+For a ↗ row the column reports only what the source says: ⏳ + the check if the source
+records a pending verification, ↻ + the conditions if it records them for a rejection,
+otherwise **empty**. Never ✅ — confirming an external decision is its owner's business, and a
+tick here would claim a verification nobody in this package did.
 
 ```markdown
 | [001](adr/001-serverless-first.md) | Serverless-First on AWS | Accepted | ✅ confirmed |
 | [007](adr/007-in-memory-index.md)  | In-Memory Index         | Accepted | ⏳ pending — p95 < 200 ms, not yet measured |
 | [022](adr/022-no-sync-backend.md)  | No Sync Backend         | Rejected | ↻ revisit: multi-device demand, or funded hosting |
-| [↗ RFC-14](../../specs/decisions/rfc-014.md) | Event Envelope Format | Accepted | owned by specs/decisions |
+| [↗ RFC-14](../../specs/decisions/rfc-014.md) | Event Envelope Format | Accepted | |
 ```
 
-If any row is external, put the precedence line directly above the table.
 
 ## NEXT STEP:
 

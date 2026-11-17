@@ -20,7 +20,9 @@ Document cross-cutting concerns — security, observability, error handling, con
 
 Several of these have two variants selected by `execution_topology`. Ask the matching
 one. **"Does not apply" is a valid and valuable answer** — record it with its reason and
-an ADR link rather than leaving a blank. An empty section is indistinguishable from an
+a link to whatever states that reason — a local ADR, a ↗ decision source, or the input
+section that says it — rather than leaving a blank. Don't create an ADR just to have
+something to link to. An empty section is indistinguishable from an
 unanswered question; an explicit absence is a documented decision.
 
 ### Security

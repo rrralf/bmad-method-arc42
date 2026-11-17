@@ -30,8 +30,17 @@ A step never appears in both, and a skipped step is never written into `stepsCom
 the frontmatter would then claim work that was not done. Resuming (`step-01b-continue.md`)
 starts at the lowest step number in neither list.
 
-Every step's review ends in the same menu — `[A] Approve · [E] Edit` — even where the step
-file doesn't spell it out. "After approval" in a step means after `[A]`.
+Menus, so that "after approval" means one thing everywhere:
+
+- Step 1 ends with `[C] Continue` — it sets things up, there is no document to approve.
+- Steps 2–10 end with `[A] Approve · [E] Edit`, even where the step file doesn't spell it
+  out. In `review` mode add `[Q] Answer the open questions` while `[?]` items remain.
+  "After approval" means after `[A]`.
+- Step 11 ends with the summary; nothing to approve.
+
+**Each skip is recorded by exactly one instruction**: the step that decides to skip appends
+the number. A step file reached later (on resume, say) whose own skip condition holds
+appends its number only if it is not already in `stepsSkipped`.
 
 ---
 
@@ -95,10 +104,13 @@ It prints merged JSON from `_bmad/config.toml`, `_bmad/config.user.toml` and the
 
 **Fallback** (installer older than 6.10, or the script fails): read
 `_bmad/core/config.yaml`, `_bmad/arc42/config.yaml` and, if present, `_bmad/bmm/config.yaml`
-for the same keys. Missing keys take the defaults in `module.yaml`; never block.
+for the same keys. Missing keys take these defaults — never block:
+`architecture_output` = `{project-root}/docs/architecture`,
+`planning_artifacts` = `{project-root}/{output_folder}/planning-artifacts`,
+`output_folder` = `_bmad-output`, languages = `English`.
 
 `planning_artifacts` is not a core key. It belongs to `bmm`, which this module does not
-require, so `module.yaml` declares its own copy with the same default.
+require, so this module declares its own copy at install time, with the same default.
 
 ### Paths
 

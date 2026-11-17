@@ -47,7 +47,7 @@ Rebuild the Quick Navigation section with actual generated documents:
 - Update the "Decision Index" table with all ADRs **and** all externally-owned decisions
   (↗ rows), deriving the last column from each ADR file: ⏳ + the pending check for an
   `Accepted` ADR whose Confirmation is not discharged, ↻ + the conditions for a `Rejected`
-  one, ✅ otherwise
+  one, ✅ for a local ADR otherwise. ↗ rows follow step 8's rule — never ✅
 - Keep the "Source of Truth" section if `decision_source` lists anything, one line per
   source in precedence order, with the precedence line intact; delete it only when the
   list is empty and this package genuinely originates the decisions

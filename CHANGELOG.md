@@ -22,6 +22,8 @@ BMAD 6.12 compatibility, and fixes for defects found by the first independent st
   alone was refused for lacking a PRD.
 - **Decision sources are detected, not only asked about.** A spine's `AD-n` entries, a
   decision-log document or a spec memlog are proposed as `decision_source` automatically.
+  A spine is recognised by its frontmatter (`type: architecture-spine`) as well as by file
+  name, since spines get renamed.
 - **`customize.toml`** with the standard BMAD fields: `persistent_facts` (treated as settled
   decisions, cited instead of asked), `activation_steps_prepend` / `_append`, `on_complete`.
 - **`stepsSkipped`** in README frontmatter, alongside `stepsCompleted`.
@@ -39,6 +41,10 @@ BMAD 6.12 compatibility, and fixes for defects found by the first independent st
   externally-owned decisions; they now take a local ADR or a ↗ source link.
 - **Absences say what kind they are**: "by decision" or "consequence of …". The security
   template labelled every absence "by decision", contradicting inputs that say otherwise.
+- **One menu convention**: `[C]` for step 1, `[A]/[E]` (+ `[Q]` in review) for steps 2–10.
+  Step files used three different menus, so "after approval" meant different things.
+- **The Decision Index never ticks ✅ for an external decision.** Step 8 said leave the
+  column blank, its example said "owned by …", step 11 said ✅ — three rules for one cell.
 - **Input validation runs first** in step 1, before the questions about decision sources and
   interaction mode, which all presuppose a product.
 - `module-help.csv`: phase `plan` (6.12 naming) instead of `3-solutioning`.
