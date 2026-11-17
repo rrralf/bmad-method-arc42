@@ -48,8 +48,16 @@ If `local-process` / `browser`:
 7. "Security — what data do we handle? Any compliance requirements?"
 
 ### Sizing
+
+If `server` / `hybrid`:
 8. "How much data do we process/store? Rough estimates."
 9. "How many users/requests per day?"
+
+If `local-process` / `browser`:
+8. "How much data does one user's machine hold — inputs, saved state, caches?"
+9. Skip request volume: with no shared instance there is nothing to count. Don't write a
+   "Users / requests per day — not applicable" row either; the dropped question belongs in
+   README → *Deliberately Not Documented* with the scalability variant.
 
 ## GENERATION:
 
@@ -64,4 +72,4 @@ Generate `02-constraints-nfr.md` using template. Show for review.
 
 ## NEXT STEP:
 
-After approval, update frontmatter `stepsCompleted: [1, 2, 3]`, then load `./step-04-building-blocks.md`.
+After approval, append `3` to `stepsCompleted` (see *Step State* in `../workflow.md`), then load `./step-04-building-blocks.md`.

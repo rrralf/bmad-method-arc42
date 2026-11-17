@@ -1,8 +1,19 @@
 {
   "name": "bmad-method-arc42",
-  "version": "0.2.0",
-  "description": "arc42-lite architecture documentation workflow for BMAD. Generates multi-file architecture docs with ADRs, diagrams, and arc42 section mapping.",
-  "keywords": ["bmad", "arc42", "architecture", "documentation", "adr"],
+  "version": "0.3.0",
+  "description": "arc42 architecture documentation generator for BMAD: a Claude Code skill that writes a multi-file docs-as-code package with ADRs, C4 diagrams and an arc42 section map.",
+  "keywords": [
+    "bmad",
+    "bmad-method",
+    "arc42",
+    "architecture",
+    "architecture-documentation",
+    "adr",
+    "c4-model",
+    "docs-as-code",
+    "claude-code",
+    "claude-code-skill"
+  ],
   "author": "rralf",
   "license": "MIT",
   "repository": {

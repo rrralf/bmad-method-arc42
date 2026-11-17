@@ -1,5 +1,6 @@
 ---
-stepsCompleted: []
+stepsCompleted: [] # steps that ran and were approved
+stepsSkipped: [] # steps excluded by feature flags or topology — never also in stepsCompleted
 interaction_mode: '' # discovery (ask) | review (extract from inputs, confirm)
 execution_topology: '' # server | hybrid | local-process | browser
 features:
@@ -8,7 +9,7 @@ features:
   has_services: false
   has_deployment: false
 inputDocuments: []
-decision_source: 'none' # path/URL where decisions are already recorded, if anywhere
+decision_source: [] # paths/URLs where decisions are already recorded; empty = this package originates them
 workflowType: 'arc42-architecture'
 project_name: '{{project_name}}'
 user_name: '{{user_name}}'
@@ -21,12 +22,17 @@ date: '{{date}}'
 
 ## Source of Truth
 
-<!-- Delete this section only if `decision_source` is 'none' — i.e. this package really is
+<!-- Delete this section only if `decision_source` is empty — i.e. this package really is
      where the decisions originate. Otherwise it is the first thing a reader needs. -->
 
-Architectural decisions for {{project_name}} are recorded in **{{decision_source}}**.
+Architectural decisions for {{project_name}} are recorded in:
+
+1. {{decision_source[0]}}
+2. {{decision_source[1] — one line per source, in precedence order}}
+
 This package is a *derived view*: it explains structure, and links to decisions rather than
-restating them. **Where the two disagree, {{decision_source}} wins.**
+restating them. **Where this package and a source disagree, the source wins; between
+sources, the one listed first wins.**
 
 ADRs under [`adr/`](adr/) cover only decisions that have no home there. Entries marked ↗ in
 the decision index point outward and are not maintained here.
@@ -74,8 +80,9 @@ This documentation follows an **arc42-lite** structure — a pragmatic adaptatio
 Every architectural decision, wherever it lives. Rows marked ↗ are owned elsewhere —
 follow the link; they are not maintained in this package.
 
-Statuses: `Proposed` · `Accepted` · `Rejected` · `Deprecated` · `Superseded by ADR-NNN`.
-The last column is derived from each ADR: ⏳ = accepted but not yet verified,
+Statuses of ADRs written here: `Proposed` · `Accepted` · `Rejected` · `Deprecated` ·
+`Superseded by ADR-NNN`. A ↗ row reports its owner's status; `— (not stated in source)`
+means the owner gives none. The last column: ⏳ = accepted but not yet verified,
 ↻ = rejected with conditions that would reopen it.
 
 | ADR | Title | Status | Confirmation / revisit |
@@ -97,10 +104,12 @@ The last column is derived from each ADR: ⏳ = accepted but not yet verified,
 
 ## Principles
 
+<!-- Keep the API-first line only if `has_api: true`. Without an API it is not a principle
+     of this system, and stating it reads as a claim the package then fails to back. -->
 - **API-first** — the OpenAPI contract is written before the implementation and ships as a
   mandatory part of this package; the code conforms to the contract, not the other way round
 - **One concern per file** — each document has one reason to change
 - **ADRs are immutable** — once accepted, create a new ADR to supersede
-- **Code is truth** — docs explain *why*, not *what* (code does that); the API contract is
-  the exception — there the document *is* the source of truth
+- **Code is truth** — docs explain *why*, not *what* (code does that){{; the API contract is
+  the exception — there the document *is* the source of truth — only if has_api}}
 - **arc42-lite** — use what helps, skip what doesn't

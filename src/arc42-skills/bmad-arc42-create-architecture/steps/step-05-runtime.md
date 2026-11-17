@@ -81,6 +81,11 @@ Generate `05-services/{name}.md` for each service using template `./templates/se
 
 ## NEXT STEP:
 
-After approval, update frontmatter, then:
+Update step state (see *Step State* in `../workflow.md`):
+- If at least one of `has_pipeline` / `has_api` / `has_services` was set, append `5` to
+  `stepsCompleted` after approval; if none was, append `5` to `stepsSkipped`.
+
+Then:
 - If `has_deployment` → load `./step-06-deployment.md`
-- If not → skip to `./step-07-crosscutting.md`
+- If not → append `6` to `stepsSkipped` and load `./step-07-crosscutting.md` directly —
+  step 6 is not opened, so this is the one place its skip gets recorded

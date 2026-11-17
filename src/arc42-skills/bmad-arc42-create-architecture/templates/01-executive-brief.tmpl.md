@@ -36,9 +36,14 @@
 
 ### Follows from the above
 
-| Decision | Derived from | ADR |
-|----------|--------------|-----|
-| {{decision}} | {{which given(s)}} | [ADR-xxx](../adr/xxx.md) |
+<!-- Decision column: link to whoever owns the decision — a local ADR
+     ([ADR-001](../adr/001-slug.md)) or, when it lives in a `decision_source`, the source
+     itself, marked ↗ — `[↗ AD-3](<relative path to the source>#<anchor>)`; the path is
+     whatever step 1 recorded in `decision_source`, made relative to this file). Never create a
+     local ADR just to have something to link to. -->
+| Decision | Derived from | Owner |
+|----------|--------------|-------|
+| {{decision}} | {{which given(s)}} | {{[ADR-NNN](../adr/NNN-slug.md) or [↗ source-id](link)}} |
 
 ## Solution Strategy
 
@@ -46,5 +51,5 @@
 > circumstance above, move it — the distinction between chosen and imposed is the
 > point of splitting these two sections.
 
-| Decision | Approach | Rationale | ADR |
+| Decision | Approach | Rationale | Owner |
 |----------|----------|-----------|-----|

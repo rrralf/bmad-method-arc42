@@ -24,42 +24,67 @@ Look for existing `{architecture_output}/README.md`:
 ### 2. Input Document Discovery
 
 Discover and load context documents from:
-- `{planning_artifacts}/**` — resolved from `_bmad/arc42/config.yaml`; if `_bmad/bmm/config.yaml`
-  exists and sets a different value, prefer bmm's (the project already stores artifacts there)
-- `{output_folder}/**`
+- `{planning_artifacts}/**` — see *Configuration Loading* in `../workflow.md` for which
+  module's value wins
+- `{output_folder}/**` — includes `{output_folder}/specs/` where `bmad-spec` writes
 - `{project-root}/docs/**`
+- `{project-root}/AGENTS.md`, `{project-root}/CLAUDE.md` — repo conventions, if present
 
 If `{planning_artifacts}` resolves to a path that does not exist, say so rather than searching
 on silently. An empty result from an unconfigured path looks exactly like a project with no
-planning documents, and that difference decides whether step 3 refuses to continue.
+planning documents, and that difference decides whether the next section refuses to continue.
 
 Look for:
-- Product Brief (`*brief*.md`)
-- PRD (`*prd*.md`)
-- Product Strategy (`*strategy*.md`)
-- UX Design (`*ux-design*.md`)
-- Research Documents (`*research*.md`)
-- Project Context (`**/project-context.md`)
-- Existing architecture docs (`{architecture_output}/**`)
+
+| Kind | Patterns | Produced by |
+|------|----------|-------------|
+| Spec | `**/SPEC.md` (+ its `.memlog.md`) | `bmad-spec` |
+| PRD | `*prd*.md` | `bmad-prd` |
+| Product Brief | `*brief*.md` | `bmad-product-brief` |
+| Product Strategy | `*strategy*.md` | — |
+| Architecture spine | `**/ARCHITECTURE-SPINE.md` (+ its `.memlog.md`), **or any document whose frontmatter says `type: architecture-spine`** — spines get renamed | `bmad-architecture` |
+| UX | `**/DESIGN.md`, `**/EXPERIENCE.md`, `*ux-design*.md` | `bmad-ux` (older: `bmad-create-ux-design`) |
+| Research | `*research*.md` | research skills |
+| Project context | `**/project-context.md`, `AGENTS.md` | `bmad-project-context` |
+| Existing architecture docs | `{architecture_output}/**` | this workflow |
+
+A `.memlog.md` next to a spec or spine is its rationale log. Prefer it over re-deriving
+rationale from the document, and never restate it — link to it.
 
 **Loading Rules:**
 - Load ALL discovered files completely
 - Track in frontmatter `inputDocuments` array
 - Confirm findings with user before proceeding
 
-### 2b. Where Do Decisions Already Live?
+### 3. Validate Required Inputs — before asking anything else
+
+**A PRD, a spec (`SPEC.md`) or a Product Strategy is required.** At least one must exist.
+An architecture spine alone is not enough: it records decisions, not what the product is for.
+- If none found: "Architecture requires a PRD, a spec or a product strategy. Please provide
+  one — `bmad-prd` or `bmad-spec` can produce it."
+- Do NOT proceed, and do not ask any of the questions below: they all presuppose a product.
+
+### 3b. Where Do Decisions Already Live?
 
 Before writing anything, establish whether this package is the origin of architectural
-decisions or a derived view of them. Ask:
+decisions or a derived view of them.
 
-"Do architectural decisions already live somewhere — a spec with a rationale log, an RFC
-folder, a decision journal, a wiki? If so, that stays the source of truth and I'll link to
-it instead of restating it here."
+**Detect first, then ask.** These are decision sources by construction — propose them
+without waiting to be told:
+- an `ARCHITECTURE-SPINE.md` — its `AD-n` entries are decisions, its `.memlog.md` their rationale
+- a document whose sections are a decision log (`AD-n`, `ADR-n`, `RFC-n`, "Decision:" blocks)
+- a spec `.memlog.md` with `decision` entries
 
-Record in frontmatter:
+Then ask: "Do architectural decisions also live anywhere else — an RFC folder, a decision
+journal, a wiki? Whatever already holds them stays the source of truth; I'll link to it
+instead of restating it here."
+
+Decisions may live in more than one place (a spine and a PRD section, say). Record every
+source, **in order of precedence** — the first one wins over the later ones, and every
+one of them wins over this package:
 
 ```yaml
-decision_source: 'none' # or a path/URL — e.g. 'des-specs/decisions/' or a Confluence space
+decision_source: [] # e.g. ['docs/planning/ARCHITECTURE-SPINE.md', 'docs/planning/prd.md#5']
 ```
 
 If a source exists, state the consequence plainly so it isn't a surprise at step 8:
@@ -67,13 +92,13 @@ If a source exists, state the consequence plainly so it isn't a surprise at step
 home yet, and index the existing ones as links. Two descriptions of one system drift, and
 then nobody knows which the code follows."
 
-### 2c. Choose Interaction Mode
+### 3c. Choose Interaction Mode
 
 Judge how much is already decided and written down. This sets the shape of every later
 step — see INTERACTION MODES in `../workflow.md`.
 
 - Inputs are a brief and little else, decisions still open → `discovery`
-- A PRD, spec or decision log covers most of the ground → `review`
+- A PRD, spec, spine or decision log covers most of the ground → `review`
 
 Architecture arriving *after* planning is the normal case, not the exception. When it does,
 `review` is the right mode: the questions in later steps then serve as a **checklist of what
@@ -93,12 +118,6 @@ Record in frontmatter:
 ```yaml
 interaction_mode: review # or discovery
 ```
-
-### 3. Validate Required Inputs
-
-**PRD or Product Strategy required.** At least one must exist.
-- If neither found: "Architecture requires a PRD or Product Strategy. Please provide one."
-- Do NOT proceed without at least one.
 
 ### 4. Feature Detection
 
@@ -157,11 +176,14 @@ Create the workspace:
 "Welcome {{user_name}}! I've set up your arc42 architecture workspace for {{project_name}}.
 
 **Documents Found:**
-- PRD: {status}
-- Strategy: {status}
-- UX Design: {status}
+- Spec / PRD / Strategy: {status}
+- Architecture spine: {status}
+- UX: {status}
 - Research: {status}
+- Project context: {status}
 - Existing arch docs: {status}
+
+**Decision sources** (in precedence order): {decision_source, or "none — this package originates them"}
 
 **Execution topology:** {execution_topology}
 _(quality sections will be asked in their {server-side / local} variant)_
@@ -189,4 +211,4 @@ Ready to begin. Anything to add or correct?
 
 ## NEXT STEP:
 
-After user selects [C], update frontmatter `stepsCompleted: [1]`, then load `./step-02-context.md`.
+After the user selects [C], append `1` to `stepsCompleted` (see *Step State* in `../workflow.md`), then load `./step-02-context.md`.

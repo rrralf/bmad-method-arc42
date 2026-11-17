@@ -65,4 +65,4 @@ Show the generated content to the user for review:
 
 ## NEXT STEP:
 
-After approval, update README.md frontmatter `stepsCompleted: [1, 2]`, then load `./step-03-constraints.md`.
+After approval, append `2` to `stepsCompleted` (see *Step State* in `../workflow.md`), then load `./step-03-constraints.md`.

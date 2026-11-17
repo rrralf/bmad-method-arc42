@@ -37,4 +37,4 @@ Generate both files. Show for review.
 
 ## NEXT STEP:
 
-After approval, update frontmatter, then load `./step-11-finalize.md`.
+After approval, append `10` to `stepsCompleted` (see *Step State* in `../workflow.md`), then load `./step-11-finalize.md`.

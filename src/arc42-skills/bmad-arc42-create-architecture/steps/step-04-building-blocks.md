@@ -88,4 +88,4 @@ Show the generated content to the user for review:
 
 ## NEXT STEP:
 
-After approval, update README.md frontmatter, then load `./step-05-runtime.md`.
+After approval, append `4` to `stepsCompleted` (see *Step State* in `../workflow.md`), then load `./step-05-runtime.md`.

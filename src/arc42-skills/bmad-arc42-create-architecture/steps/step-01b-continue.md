@@ -10,6 +10,7 @@ Resume an existing arc42 architecture workflow from where it left off.
 
 Read `{architecture_output}/README.md` frontmatter:
 - `stepsCompleted` — which steps are done
+- `stepsSkipped` — which steps were excluded by flags or topology
 - `interaction_mode` — `discovery` or `review` (see INTERACTION MODES in `../workflow.md`)
 - `execution_topology` — which variant of the quality sections applies
 - `decision_source` — whether decisions are owned elsewhere
@@ -21,7 +22,7 @@ were written under different assumptions.
 
 ### 2. Determine Next Step
 
-Find the first incomplete step and report:
+Find the lowest step number in neither `stepsCompleted` nor `stepsSkipped` and report:
 
 "Welcome back {{user_name}}! Resuming arc42 architecture for {{project_name}}.
 
@@ -41,4 +42,4 @@ Find the first incomplete step and report:
 
 ## NEXT STEP:
 
-Load the step file corresponding to the next incomplete step.
+Load the step file for the lowest step number that is in neither `stepsCompleted` nor `stepsSkipped`.
