@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "arc42",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "source": "./",
       "strict": false,
       "skills": ["./src/arc42-skills/bmad-arc42-create-architecture"],

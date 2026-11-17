@@ -22,7 +22,7 @@ When it asks **"Do you want to install custom or community modules?"**, answer y
 it this repository, pinned to the latest release:
 
 ```
-https://github.com/rrralf/bmad-method-arc42.git@v0.3.0
+https://github.com/rrralf/bmad-method-arc42.git@v0.3.1
 ```
 
 Then, in Claude Code inside that project:
@@ -33,6 +33,9 @@ Then, in Claude Code inside that project:
 
 Requires the BMAD installer **v6.10+**. `bmm` is not required. Non-interactive install,
 updates and uninstall are under [Install](#install).
+
+**No BMAD in your project?** The module also installs as a plain Claude Code plugin — see
+[As a Claude Code plugin](#as-a-claude-code-plugin).
 
 ## What it generates
 
@@ -113,7 +116,7 @@ Absent sections are listed explicitly, so "this system has no API" can't be mist
 
 arc42 is a community module: it is not in the BMAD installer's built-in list, so the
 installer fetches it from this repository's Git URL. Always pin a release tag
-(`@v0.3.0`) — the bare URL installs whatever is on `main` at that moment.
+(`@v0.3.1`) — the bare URL installs whatever is on `main` at that moment.
 
 ### Interactive
 
@@ -124,7 +127,7 @@ See [Quick start](#quick-start).
 ```bash
 npx bmad-method install \
   --directory /path/to/your/project \
-  --custom-source https://github.com/rrralf/bmad-method-arc42.git@v0.3.0 \
+  --custom-source https://github.com/rrralf/bmad-method-arc42.git@v0.3.1 \
   --tools claude-code \
   --yes
 ```
@@ -139,7 +142,7 @@ Re-run the installer with the new tag and `--action update`:
 ```bash
 npx bmad-method install \
   --directory /path/to/your/project \
-  --custom-source https://github.com/rrralf/bmad-method-arc42.git@v0.3.0 \
+  --custom-source https://github.com/rrralf/bmad-method-arc42.git@v0.3.1 \
   --action update \
   --yes
 ```
@@ -155,13 +158,36 @@ install:
 
 ```bash
 cat ~/.bmad/cache/custom-modules/github.com/rrralf/bmad-method-arc42/.bmad-source.json
-# "version": "v0.3.0", "sha": "a94e43a…"
+# "version": "v0.3.1", "sha": "…"
 ```
 
 The installer registers `arc42` as a module, copies it to `_bmad/arc42/` and configures the
 Claude Code skill automatically — `/bmad-arc42-create-architecture` is available right after
 install. The module declares its own `planning_artifacts`, so document discovery works
 without `bmm`, and defers to bmm's value when bmm is present.
+
+### As a Claude Code plugin
+
+Without the BMAD installer — for a project that doesn't use BMAD, or to try the workflow
+first. In Claude Code:
+
+```
+/plugin marketplace add rrralf/bmad-method-arc42
+/plugin install arc42@bmad-method-arc42
+```
+
+Then run `/arc42:bmad-arc42-create-architecture` (plugin skills carry the plugin's name).
+
+What differs from a BMAD install:
+
+- **No configuration step.** Output goes to `docs/architecture/`; the product name and the
+  document language are taken from your input documents. To change them, install through
+  BMAD instead.
+- **Inputs** are found under `docs/`, `_bmad-output/` and the project root — put the PRD or
+  spec there.
+- **Updates follow `main`**, not a release tag: `/plugin marketplace update
+  bmad-method-arc42` pulls the latest.
+- No `customize.toml` overrides — those are read through BMAD's scripts.
 
 ### Uninstall
 

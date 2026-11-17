@@ -8,6 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Because this module is a set of workflow instructions rather than executable code,
 "changed behaviour" means what the workflow asks, generates, and refuses to skip.
 
+## [0.3.1] — 2026-11-17
+
+### Added
+
+- **Install as a Claude Code plugin**, without the BMAD installer:
+  `/plugin marketplace add rrralf/bmad-method-arc42`, then `/plugin install arc42@bmad-method-arc42`.
+  The workflow runs with no `_bmad/` at all — verified by a full stand run.
+
+### Fixed
+
+- `marketplace.json` declared the plugin `source` as `src/arc42-skills` while listing skill
+  paths from the repository root. The BMAD installer reads them from the root and was
+  unaffected; Claude Code reads them from `source`, so a plugin install contained no skill.
+  `source` is now the repository root and both read the same path.
+- With no BMAD configuration, `project_name` and `user_name` had no defaults and the document
+  language fell back to English even for inputs in another language. The product name now
+  comes from the input documents, `user_name` is omitted rather than invented, and both
+  languages follow the user and the inputs — only when nothing is configured.
+
 ## [0.3.0] — 2026-11-17
 
 BMAD 6.12 compatibility, and fixes for defects found by the first independent stand run
@@ -161,6 +180,7 @@ Initial release, plus the adjustments made before versioning began.
 - The domain model moved out of a single top-level section into each block's Level 2,
   where the entities actually belong.
 
+[0.3.1]: https://github.com/rrralf/bmad-method-arc42/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/rrralf/bmad-method-arc42/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/rrralf/bmad-method-arc42/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/rrralf/bmad-method-arc42/releases/tag/v0.1.0
