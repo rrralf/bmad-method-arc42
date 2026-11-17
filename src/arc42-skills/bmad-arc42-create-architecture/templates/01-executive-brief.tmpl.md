@@ -38,7 +38,8 @@
 
 <!-- Decision column: link to whoever owns the decision — a local ADR
      ([ADR-001](../adr/001-slug.md)) or, when it lives in a `decision_source`, the source
-     itself, marked ↗ ([↗ AD-3](../../planning/ARCHITECTURE-SPINE.md#ad-3--…)). Never create a
+     itself, marked ↗ — `[↗ AD-3](<relative path to the source>#<anchor>)`; the path is
+     whatever step 1 recorded in `decision_source`, made relative to this file). Never create a
      local ADR just to have something to link to. -->
 | Decision | Derived from | Owner |
 |----------|--------------|-------|

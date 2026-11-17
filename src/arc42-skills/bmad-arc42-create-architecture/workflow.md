@@ -21,8 +21,8 @@ This uses **micro-file architecture** with **per-step file output**:
 Two frontmatter lists in `{architecture_output}/README.md` record progress, and every step
 ends by updating exactly one of them:
 
-- `stepsCompleted` — steps that ran and whose output the user approved. Append the step
-  number **after** approval, never before.
+- `stepsCompleted` — steps that ran to their end: steps 2–10 after `[A]`, step 1 after
+  `[C]`, step 11 once its summary has been presented. Never append before that point.
 - `stepsSkipped` — steps that did not run because a feature flag or `execution_topology`
   excluded them. Append the number at the moment the step is skipped.
 
