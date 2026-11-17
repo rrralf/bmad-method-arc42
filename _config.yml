@@ -1,0 +1,11 @@
+# GitHub Pages: serve README.md as the landing page.
+# src/ holds workflow templates with {{placeholders}} in their frontmatter;
+# Jekyll would try to render them as pages and fail the build.
+title: bmad-method-arc42
+description: >-
+  arc42 architecture documentation generator for BMAD: a Claude Code skill that writes
+  a multi-file docs-as-code package with ADRs, C4 diagrams and an arc42 section map.
+theme: jekyll-theme-primer
+exclude:
+  - src/
+  - package.json
