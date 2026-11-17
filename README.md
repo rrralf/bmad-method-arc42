@@ -12,12 +12,17 @@ has one reason to change.
 
 ## Quick start
 
+Run the BMAD installer in your project:
+
 ```bash
-npx bmad-method install \
-  --directory /path/to/your/project \
-  --custom-source https://github.com/rrralf/bmad-method-arc42.git \
-  --tools claude-code \
-  --yes
+npx bmad-method install
+```
+
+When it asks **"Do you want to install custom or community modules?"**, answer yes and give
+it this repository, pinned to the latest release:
+
+```
+https://github.com/rrralf/bmad-method-arc42.git@v0.3.0
 ```
 
 Then, in Claude Code inside that project:
@@ -26,8 +31,8 @@ Then, in Claude Code inside that project:
 /bmad-arc42-create-architecture
 ```
 
-Requires the BMAD installer **v6.10+**. `bmm` is not required. More options under
-[Install](#install).
+Requires the BMAD installer **v6.10+**. `bmm` is not required. Non-interactive install,
+updates and uninstall are under [Install](#install).
 
 ## What it generates
 
@@ -106,39 +111,52 @@ Absent sections are listed explicitly, so "this system has no API" can't be mist
 > Tested on BMAD installer 6.10.0 and 6.12.4, standalone and alongside `bmm`. Earlier
 > versions are unverified.
 
-### From Git (recommended — no clone needed)
+arc42 is a community module: it is not in the BMAD installer's built-in list, so the
+installer fetches it from this repository's Git URL. Always pin a release tag
+(`@v0.3.0`) — the bare URL installs whatever is on `main` at that moment.
 
-Fresh BMAD project — see [Quick start](#quick-start). A fresh non-interactive (`--yes`)
-install needs `--tools` with a real IDE id; `npx bmad-method install --list-tools` lists them.
+### Interactive
 
-Add to / update an existing BMAD project:
+See [Quick start](#quick-start).
+
+### Non-interactive (scripts, CI)
 
 ```bash
 npx bmad-method install \
   --directory /path/to/your/project \
-  --custom-source https://github.com/rrralf/bmad-method-arc42.git \
-  --action update \
+  --custom-source https://github.com/rrralf/bmad-method-arc42.git@v0.3.0 \
+  --tools claude-code \
   --yes
 ```
 
-The installer re-clones the Git source on update, so re-running the command pulls the
-latest version. Append `@<branch-or-tag>` to the URL to install something other than the
-default branch.
+A fresh `--yes` install needs `--tools` with a real IDE id; `npx bmad-method install
+--list-tools` lists them.
 
-### From a local clone (module development)
+### Update an existing project
+
+Re-run the installer with the new tag and `--action update`:
 
 ```bash
-git clone https://github.com/rrralf/bmad-method-arc42.git
-
 npx bmad-method install \
   --directory /path/to/your/project \
-  --custom-source /path/to/bmad-method-arc42 \
+  --custom-source https://github.com/rrralf/bmad-method-arc42.git@v0.3.0 \
   --action update \
   --yes
 ```
 
-Point `--custom-source` at the **repo root**, not `src/`. The installer reads
-`.claude-plugin/marketplace.json` and resolves the module from `src/arc42-skills/`.
+The installer caches clones in `~/.bmad/cache/custom-modules/`, and the cache key does not
+include the tag. If the installed version doesn't change — or the installer prints
+`not refreshed (remote unreachable). Using cached copy` — delete that directory and run
+again.
+
+To see which release is actually installed, read the clone record, not
+`_bmad/_config/manifest.yaml` — the manifest reports `version: main` even for a tagged
+install:
+
+```bash
+cat ~/.bmad/cache/custom-modules/github.com/rrralf/bmad-method-arc42/.bmad-source.json
+# "version": "v0.3.0", "sha": "a94e43a…"
+```
 
 The installer registers `arc42` as a module, copies it to `_bmad/arc42/` and configures the
 Claude Code skill automatically — `/bmad-arc42-create-architecture` is available right after
@@ -183,6 +201,24 @@ on_complete = "Open a PR with the generated docs."
 `persistent_facts` are treated as settled decisions: the workflow cites them instead of
 asking. `activation_steps_prepend` / `activation_steps_append` run before and after
 configuration loading.
+
+## Development
+
+To test changes to the module itself, install from a local clone instead of the Git URL:
+
+```bash
+git clone https://github.com/rrralf/bmad-method-arc42.git
+
+npx bmad-method install \
+  --directory /path/to/test/project \
+  --custom-source /path/to/bmad-method-arc42 \
+  --action update \
+  --yes
+```
+
+Point `--custom-source` at the **repo root**, not `src/`. The installer reads
+`.claude-plugin/marketplace.json` and resolves the module from `src/arc42-skills/`. A local
+path installs the working tree as it is, uncommitted changes included.
 
 ## Changelog
 
